@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('./src/app/index');
 var debug = require('debug')('nevis-range:server');
 var http = require('http');
 
