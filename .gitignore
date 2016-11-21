@@ -1,0 +1,6 @@
+node_modules
+npm-debug.log
+.idea
+public/stylesheets/*.css
+public/stylesheets/*.css.map
+
