@@ -6,56 +6,28 @@ const RSVP = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="firstName">First Name</label>
+        <label htmlFor="name">Who are you?</label>
         <div>
-          <Field name="firstName" component="input" type="text" placeholder="First Name" />
+          <Field name="name" component="input" type="text" />
         </div>
       </div>
       <div>
-        <label htmlFor="lastName">Last Name</label>
+        <label htmlFor="canCome">Can you make it?</label>
         <div>
-          <Field name="lastName" component="input" type="text" placeholder="Last Name" />
+          <label htmlFor="canCome"><Field name="canCome" component="input" type="radio" value="yes" /> Yes</label>
+          <label htmlFor="canCome"><Field name="canCome" component="input" type="radio" value="no" /> No</label>
         </div>
       </div>
       <div>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="foodChoice">What would you like to eat?</label>
         <div>
-          <Field name="email" component="input" type="email" placeholder="Email" />
-        </div>
-      </div>
-      <div>
-        <label htmlFor="sex">Sex</label>
-        <div>
-          <label htmlFor="sex"><Field name="sex" component="input" type="radio" value="male" /> Male</label>
-          <label htmlFor="sex"><Field name="sex" component="input" type="radio" value="female" /> Female</label>
-        </div>
-      </div>
-      <div>
-        <label htmlFor="favoriteColor">Favorite Color</label>
-        <div>
-          <Field name="favoriteColor" component="select">
-            <option />
-            <option value="ff0000">Red</option>
-            <option value="00ff00">Green</option>
-            <option value="0000ff">Blue</option>
-          </Field>
-        </div>
-      </div>
-      <div>
-        <label htmlFor="employed">Employed</label>
-        <div>
-          <Field name="employed" id="employed" component="input" type="checkbox" />
-        </div>
-      </div>
-      <div>
-        <label htmlFor="notes">Notes</label>
-        <div>
-          <Field name="notes" component="textarea" />
+          <label htmlFor="foodChoice"><Field name="foodChoice" component="input" type="radio" value="meat" /> Haggis</label>
+          <label htmlFor="foodChoice"><Field name="foodChoice" component="input" type="radio" value="vegetarian" /> Veggie haggis</label>
         </div>
       </div>
       <div>
         <button type="submit" disabled={pristine || submitting}>Submit</button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+        <button type="button" disabled={pristine || submitting} onClick={reset}>Start over</button>
       </div>
     </form>
   );
