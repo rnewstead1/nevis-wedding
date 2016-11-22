@@ -59,27 +59,21 @@
 	var _require3 = __webpack_require__(208),
 	    reduxFormReducer = _require3.reducer;
 
-	var SimpleForm = __webpack_require__(382).default;
+	var RSVP = __webpack_require__(382).default;
 
 	var reducer = combineReducers({
-	  form: reduxFormReducer // mounted under "form"
+	  form: reduxFormReducer
 	});
 	var store = createStore(reducer);
 
 	var showResults = function showResults(values) {
-	  return new Promise(function (resolve) {
-	    setTimeout(function () {
-	      // simulate server latency
-	      window.alert('You submitted:\n\n' + JSON.stringify(values, null, 2));
-	      resolve();
-	    }, 500);
-	  });
+	  console.log('Submitted:\n\n' + JSON.stringify(values));
 	};
 
 	ReactDOM.render(React.createElement(
 	  Provider,
 	  { store: store },
-	  React.createElement(SimpleForm, { onSubmit: showResults })
+	  React.createElement(RSVP, { onSubmit: showResults })
 	), document.getElementById('content'));
 
 /***/ },
@@ -32476,8 +32470,7 @@
 	    Field = _require.Field,
 	    reduxForm = _require.reduxForm;
 
-	var SimpleForm = function SimpleForm(props) {
-	  console.log('This is running on the client');
+	var RSVP = function RSVP(props) {
 	  var handleSubmit = props.handleSubmit,
 	      pristine = props.pristine,
 	      reset = props.reset,
@@ -32491,7 +32484,7 @@
 	      null,
 	      React.createElement(
 	        'label',
-	        null,
+	        { htmlFor: 'firstName' },
 	        'First Name'
 	      ),
 	      React.createElement(
@@ -32505,7 +32498,7 @@
 	      null,
 	      React.createElement(
 	        'label',
-	        null,
+	        { htmlFor: 'lastName' },
 	        'Last Name'
 	      ),
 	      React.createElement(
@@ -32519,7 +32512,7 @@
 	      null,
 	      React.createElement(
 	        'label',
-	        null,
+	        { htmlFor: 'email' },
 	        'Email'
 	      ),
 	      React.createElement(
@@ -32533,7 +32526,7 @@
 	      null,
 	      React.createElement(
 	        'label',
-	        null,
+	        { htmlFor: 'sex' },
 	        'Sex'
 	      ),
 	      React.createElement(
@@ -32541,13 +32534,13 @@
 	        null,
 	        React.createElement(
 	          'label',
-	          null,
+	          { htmlFor: 'sex' },
 	          React.createElement(Field, { name: 'sex', component: 'input', type: 'radio', value: 'male' }),
 	          ' Male'
 	        ),
 	        React.createElement(
 	          'label',
-	          null,
+	          { htmlFor: 'sex' },
 	          React.createElement(Field, { name: 'sex', component: 'input', type: 'radio', value: 'female' }),
 	          ' Female'
 	        )
@@ -32558,7 +32551,7 @@
 	      null,
 	      React.createElement(
 	        'label',
-	        null,
+	        { htmlFor: 'favoriteColor' },
 	        'Favorite Color'
 	      ),
 	      React.createElement(
@@ -32605,7 +32598,7 @@
 	      null,
 	      React.createElement(
 	        'label',
-	        null,
+	        { htmlFor: 'notes' },
 	        'Notes'
 	      ),
 	      React.createElement(
@@ -32631,9 +32624,16 @@
 	  );
 	};
 
+	RSVP.propTypes = {
+	  handleSubmit: React.PropTypes.func,
+	  pristine: React.PropTypes.bool,
+	  reset: React.PropTypes.func,
+	  submitting: React.PropTypes.bool
+	};
+
 	exports.default = reduxForm({
-	  form: 'simple' // a unique identifier for this form
-	})(SimpleForm);
+	  form: 'simple'
+	})(RSVP);
 
 /***/ }
 /******/ ]);

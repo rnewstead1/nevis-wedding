@@ -1,9 +1,9 @@
 const React = require('react');
-const ReactDOM = require( 'react-dom');
-const { Provider } = require( 'react-redux');
-const { createStore, combineReducers } = require( 'redux');
-const { reducer: reduxFormReducer } = require( 'redux-form');
-const RSVP = require( './RSVP.jsx').default;
+const ReactDOM = require('react-dom');
+const { Provider } = require('react-redux');
+const { createStore, combineReducers } = require('redux');
+const { reducer: reduxFormReducer } = require('redux-form');
+const RSVP = require('./RSVP.jsx').default;
 
 const reducer = combineReducers({
   form: reduxFormReducer
@@ -16,7 +16,7 @@ const showResults = (values) => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <RSVP onSubmit={showResults}/>
+    <RSVP onSubmit={showResults} />
   </Provider>,
   document.getElementById('content')
 );
