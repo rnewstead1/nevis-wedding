@@ -62,18 +62,12 @@
 	var RSVP = __webpack_require__(382).default;
 
 	var reducer = combineReducers({
-	  form: reduxFormReducer // mounted under "form"
+	  form: reduxFormReducer
 	});
 	var store = createStore(reducer);
 
 	var showResults = function showResults(values) {
-	  return new Promise(function (resolve) {
-	    setTimeout(function () {
-	      // simulate server latency
-	      window.alert('You submitted:\n\n' + JSON.stringify(values, null, 2));
-	      resolve();
-	    }, 500);
-	  });
+	  console.log('Submitted:\n\n' + JSON.stringify(values));
 	};
 
 	ReactDOM.render(React.createElement(
@@ -32477,7 +32471,6 @@
 	    reduxForm = _require.reduxForm;
 
 	var SimpleForm = function SimpleForm(props) {
-	  console.log('This is running on the client');
 	  var handleSubmit = props.handleSubmit,
 	      pristine = props.pristine,
 	      reset = props.reset,

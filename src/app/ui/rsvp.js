@@ -6,17 +6,13 @@ const { reducer: reduxFormReducer } = require( 'redux-form');
 const RSVP = require( './RSVP.jsx').default;
 
 const reducer = combineReducers({
-  form: reduxFormReducer // mounted under "form"
+  form: reduxFormReducer
 });
 const store = createStore(reducer);
 
-const showResults = values =>
-  new Promise(resolve => {
-    setTimeout(() => {  // simulate server latency
-      window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
-      resolve()
-    }, 500)
-  });
+const showResults = (values) => {
+  console.log(`Submitted:\n\n${JSON.stringify(values)}`);
+};
 
 ReactDOM.render(
   <Provider store={store}>

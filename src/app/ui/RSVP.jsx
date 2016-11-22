@@ -2,7 +2,6 @@ const React = require('react');
 const { Field, reduxForm } = require('redux-form');
 
 const SimpleForm = (props) => {
-  console.log('This is running on the client');
   const { handleSubmit, pristine, reset, submitting } = props
   return (
     <form onSubmit={handleSubmit}>
