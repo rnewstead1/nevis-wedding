@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (app) => {
-  router.get('/', (req, res) => res.render('index', { title: 'Nevis wedding' }));
+  router.get('/', (req, res) => res.render('landing', { title: 'Nevis wedding' }));
   router.get('/rsvp', (req, res) => res.render('rsvp', { title: 'RSVP' }));
   app.use('/', router);
 

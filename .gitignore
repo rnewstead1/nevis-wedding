@@ -3,4 +3,5 @@ npm-debug.log
 .idea
 public/stylesheets/*.css
 public/stylesheets/*.css.map
+public/js/*.js
 
