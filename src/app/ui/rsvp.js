@@ -3,7 +3,7 @@ const ReactDOM = require( 'react-dom');
 const { Provider } = require( 'react-redux');
 const { createStore, combineReducers } = require( 'redux');
 const { reducer: reduxFormReducer } = require( 'redux-form');
-const SimpleForm = require( './form.jsx').default;
+const RSVP = require( './RSVP.jsx').default;
 
 const reducer = combineReducers({
   form: reduxFormReducer // mounted under "form"
@@ -20,7 +20,7 @@ const showResults = values =>
 
 ReactDOM.render(
   <Provider store={store}>
-    <SimpleForm onSubmit={showResults}/>
+    <RSVP onSubmit={showResults}/>
   </Provider>,
   document.getElementById('content')
 );

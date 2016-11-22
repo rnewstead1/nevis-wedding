@@ -1,8 +1,8 @@
 module.exports = {
-  entry: "./src/app/ui/entry.js",
+  entry: "./src/app/ui/rsvp.js",
   output: {
     path: __dirname,
-    filename: "./public/js/client.js"
+    filename: "./public/js/rsvp.js"
   },
   module: {
     loaders: [

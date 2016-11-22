@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (app) => {
-  router.get('/', (req, res, next) => {
-    res.render('index', { title: 'Express' });
-  });
+  router.get('/', (req, res) => res.render('index', { title: 'Nevis wedding' }));
+  router.get('/rsvp', (req, res) => res.render('rsvp', { title: 'RSVP' }));
   app.use('/', router);
 
 // catch 404 and forward to error handler
