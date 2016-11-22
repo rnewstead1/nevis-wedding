@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node index.js",
-    "dev": "DEBUG=nevis-range:* node_modules/nodemon/bin/nodemon.js -e js,jsx,hbs,json --watch src/ --exec npm run start"
+    "build-assets": "node_modules/webpack/bin/webpack.js",
+    "dev": "DEBUG=nevis-range:* node_modules/nodemon/bin/nodemon.js -e js,jsx,hbs,json --watch src/ --exec 'npm run build-assets && npm run start'"
   },
   "dependencies": {
     "body-parser": "~1.15.2",
@@ -14,9 +15,19 @@
     "hbs": "~4.0.1",
     "morgan": "~1.7.0",
     "node-sass-middleware": "0.9.8",
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0",
+    "react-redux": "^4.4.6",
+    "redux": "^3.6.0",
+    "redux-form": "^6.2.0",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.8",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "nodemon": "^1.11.0",
+    "webpack": "^1.13.3"
   }
 }
