@@ -3,12 +3,24 @@ const express = require('express');
 const router = express.Router();
 const apiRouter = express.Router();
 
-module.exports = (app) => {
+module.exports = (app, db) => {
   router.get('/', (req, res) => res.render('landing', { title: 'Nevis wedding' }));
   router.get('/rsvp', (req, res) => res.render('rsvp', { title: 'RSVP' }));
   app.use('/', router);
 
-  apiRouter.put('/rsvp', req => console.log('Success!', req.body));
+  apiRouter.put('/rsvp', (req, res) => {
+    const collection = db.collection('guests');
+    return collection.insertOne(req.body, (err) => {
+      if (err) {
+        console.log('Save failed');
+        return res.sendStatus(500);
+      }
+
+      console.log('Saved ', req.body);
+      return res.sendStatus(201);
+    });
+  });
+
   app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
