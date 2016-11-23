@@ -1,11 +1,15 @@
 const express = require('express');
 
 const router = express.Router();
+const apiRouter = express.Router();
 
 module.exports = (app) => {
   router.get('/', (req, res) => res.render('landing', { title: 'Nevis wedding' }));
   router.get('/rsvp', (req, res) => res.render('rsvp', { title: 'RSVP' }));
   app.use('/', router);
+
+  apiRouter.put('/rsvp', req => console.log('Success!', req.body));
+  app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
   app.use((req, res, next) => {

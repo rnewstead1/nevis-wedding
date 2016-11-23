@@ -1,3 +1,6 @@
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+
 const React = require('react');
 const ReactDOM = require('react-dom');
 const { Provider } = require('react-redux');
@@ -11,13 +14,21 @@ const reducer = combineReducers({
 });
 const store = createStore(reducer, applyMiddleware(createLogger()));
 
-const showResults = (values) => {
+const saveForm = (values) => {
   console.log(`Submitted:\n\n${JSON.stringify(values)}`);
+
+  fetch('/api/rsvp', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(values)
+  });
 };
 
 ReactDOM.render(
   <Provider store={store}>
-    <RSVP onSubmit={showResults} />
+    <RSVP onSubmit={saveForm} />
   </Provider>,
   document.getElementById('content')
 );
