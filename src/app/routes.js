@@ -10,15 +10,15 @@ module.exports = (app, db) => {
 
   apiRouter.put('/rsvp', (req, res) => {
     const collection = db.collection('guests');
-    return collection.insertOne(req.body, (err) => {
-      if (err) {
-        console.log('Save failed');
+    return collection.insertOne(req.body)
+      .then(() => {
+        console.log('Saved ', req.body);
+        return res.sendStatus(201);
+      })
+      .catch((err) => {
+        console.log('Save failed', err);
         return res.sendStatus(500);
-      }
-
-      console.log('Saved ', req.body);
-      return res.sendStatus(201);
-    });
+      });
   });
 
   app.use('/api', apiRouter);
