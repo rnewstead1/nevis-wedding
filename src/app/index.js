@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const routes = require('./routes');
 const MongoClient = require('mongodb').MongoClient;
 
-const url = 'mongodb://localhost:27017/nevis';
+// const url = 'mongodb://localhost:27017/nevis';
 
 const app = express();
 
@@ -29,7 +29,7 @@ app.use(require('node-sass-middleware')({
 
 app.use(express.static(path.join(__dirname, '../../public')));
 
-MongoClient.connect(url)
+MongoClient.connect(process.env.MONGODB_URI)
   .then(db => routes(app, db))
   .catch(err => console.log('err: ', err));
 
