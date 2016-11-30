@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node index.js",
+    "start": "npm run build-assets && node index.js",
     "lint": "node_modules/eslint/bin/eslint.js --ext .js,.jsx ./src ./test index.js",
     "build-assets": "node_modules/webpack/bin/webpack.js",
-    "dev": "DEBUG=nevis-range:* node_modules/nodemon/bin/nodemon.js -e js,jsx,hbs,json --watch src/ --exec 'npm run build-assets && npm run start'",
+    "dev": "DEBUG=nevis-range:* node_modules/nodemon/bin/nodemon.js -e js,jsx,hbs,json --watch src/ --exec 'npm run start'",
     "precommit": "npm run lint"
   },
   "engine": {
