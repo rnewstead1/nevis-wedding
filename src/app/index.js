@@ -7,8 +7,6 @@ const bodyParser = require('body-parser');
 const routes = require('./routes');
 const MongoClient = require('mongodb').MongoClient;
 
-// const url = 'mongodb://localhost:27017/nevis';
-
 const app = express();
 
 // view engine setup
