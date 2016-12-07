@@ -1,12 +1,25 @@
 const React = require('react');
 const { Field, reduxForm } = require('redux-form');
+const { connect } = require('react-redux');
+const { loginUser: login } = require('../actions/login');
+
 const Login = require('./Login.jsx');
 
-const RSVP = (props) => {
-  const { handleSubmit, pristine, reset, submitting } = props;
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+const mapDispatchToProps = dispatch => ({
+  loginUser(creds) {
+    return dispatch(login(creds));
+  },
+});
+
+let RSVP = (props) => {
+  const { handleSubmit, pristine, reset, submitting, auth, loginUser } = props;
   return (
     <div>
-      <Login open />
+      <Login open={!auth.isAuthenticated} onLogin={loginUser} />
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="col-sm-2 control-label" htmlFor="name">Who are you?</label>
@@ -47,9 +60,14 @@ RSVP.propTypes = {
   handleSubmit: React.PropTypes.func,
   pristine: React.PropTypes.bool,
   reset: React.PropTypes.func,
-  submitting: React.PropTypes.bool
+  submitting: React.PropTypes.bool,
+  auth: React.PropTypes.shape({
+    isAuthenticated: React.PropTypes.bool
+  }),
+  loginUser: React.PropTypes.func,
 };
 
-export default reduxForm({
-  form: 'simple'
-})(RSVP);
+RSVP = reduxForm({ form: 'simple' })(RSVP);
+RSVP = connect(mapStateToProps, mapDispatchToProps)(RSVP);
+
+module.exports = RSVP;

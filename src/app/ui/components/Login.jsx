@@ -4,16 +4,25 @@ const Modal = require('react-modal');
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.close = this.close.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handlePhraseChange = this.handlePhraseChange.bind(this);
     this.state = {
-      open: this.props.open,
+      name: '',
+      phrase: ''
     };
   }
 
-  close() {
-    this.setState({
-      open: false
-    });
+  onSubmit() {
+    this.props.onLogin({ name: this.state.name, phrase: this.state.phrase });
+  }
+
+  handleNameChange(e) {
+    this.setState({ name: e.target.value });
+  }
+
+  handlePhraseChange(e) {
+    this.setState({ phrase: e.target.value });
   }
 
   render() {
@@ -27,18 +36,34 @@ class Login extends React.Component {
         transform: 'translate(-50%, -50%)'
       }
     };
+
     return (
-      <Modal isOpen={this.state.open} onAfterOpen={() => { }} onRequestClose={this.close} closeTimeoutMS={5} style={style} contentLabel="Modal">
-        <p>I am a modal</p>
-        <button type="button" className="close" aria-label="Close" onClick={this.close}><span aria-hidden="true">&times;</span></button>
+      <Modal isOpen={this.props.open} onAfterOpen={() => { }} onRequestClose={() => { }} closeTimeoutMS={5} style={style} contentLabel="Modal">
+        <form className="form-horizontal">
+          <div className="form-group">
+            <label className="col-sm-3 control-label" htmlFor="name">Name</label>
+            <div className="col-sm-9">
+              <input type="text" name="name" value={this.state.name} onChange={this.handleNameChange} />
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-3 control-label" htmlFor="phrase">Phrase</label>
+            <div className="col-sm-9">
+              <input type="text" name="phrase" value={this.state.phrase} onChange={this.handlePhraseChange} />
+            </div>
+          </div>
+          <div className="formGroup">
+            <button type="button" onClick={this.onSubmit}>Enter</button>
+          </div>
+        </form>
       </Modal>
     );
   }
-
 }
 
 Login.propTypes = {
-  open: React.PropTypes.bool.isRequired,
+  open: React.PropTypes.bool,
+  onLogin: React.PropTypes.func
 };
 
 module.exports = Login;

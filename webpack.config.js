@@ -1,8 +1,10 @@
 module.exports = {
-  entry: './src/app/ui/rsvp-renderer.jsx',
+  entry: {
+    'rsvp-form': './src/app/ui/rsvp-renderer.jsx',
+  },
   output: {
     path: __dirname,
-    filename: './public/js/client.js'
+    filename: './public/js/[name].js'
   },
   module: {
     loaders: [
