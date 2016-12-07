@@ -10,8 +10,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginUser(creds) {
-    return dispatch(login(creds));
+  loginUser(err) {
+    return dispatch(login(err));
   },
 });
 

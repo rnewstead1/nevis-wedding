@@ -1,6 +1,8 @@
 const React = require('react');
 const Modal = require('react-modal');
 
+const { login } = require('../api-client');
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -9,12 +11,31 @@ class Login extends React.Component {
     this.handlePhraseChange = this.handlePhraseChange.bind(this);
     this.state = {
       name: '',
-      phrase: ''
+      phrase: '',
+      open: this.props.open
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.state.open !== nextProps.open) {
+      this.setState({
+        open: nextProps.open
+      });
+    }
+  }
+
   onSubmit() {
-    this.props.onLogin({ name: this.state.name, phrase: this.state.phrase });
+    login({ name: this.state.name, phrase: this.state.phrase })
+      .then(() => {
+        this.setState({
+          open: Boolean(global.document.cookie.indexOf('id_token'))
+        });
+        if (this.props.onLogin) this.props.onLogin();
+      })
+      .catch((err) => {
+        if (this.props.onLogin) this.props.onLogin(err);
+        else console.log('Error logging in');
+      });
   }
 
   handleNameChange(e) {
@@ -38,7 +59,7 @@ class Login extends React.Component {
     };
 
     return (
-      <Modal isOpen={this.props.open} onAfterOpen={() => { }} onRequestClose={() => { }} closeTimeoutMS={5} style={style} contentLabel="Modal">
+      <Modal isOpen={this.state.open} onAfterOpen={() => { }} onRequestClose={() => { }} closeTimeoutMS={5} style={style} contentLabel="Modal">
         <form className="form-horizontal">
           <div className="form-group">
             <label className="col-sm-3 control-label" htmlFor="name">Name</label>
