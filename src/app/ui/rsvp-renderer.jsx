@@ -9,6 +9,12 @@ const auth = require('./reducers/authentication');
 const { saveForm } = require('./api-client');
 const RSVP = require('./components/RSVP.jsx');
 
+const menuOptions = [
+  { value: 'meat', label: 'Haggis' },
+  { value: 'vegetarian', label: 'Veggie haggis' },
+  { value: 'child', label: 'Child option' }
+];
+
 const reducer = combineReducers({
   form: reduxFormReducer,
   auth
@@ -17,7 +23,7 @@ const store = createStore(reducer, applyMiddleware(ReduxThunk, createLogger()));
 
 ReactDOM.render(
   <Provider store={store}>
-    <RSVP onSubmit={saveForm} />
+    <RSVP onSubmit={saveForm} menuOptions={menuOptions} />
   </Provider>,
   document.getElementById('content')
 );

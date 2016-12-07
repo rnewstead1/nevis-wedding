@@ -4,6 +4,7 @@ const { connect } = require('react-redux');
 const { loginUser: login } = require('../actions/login');
 
 const Login = require('./Login.jsx');
+const Menu = require('./Menu.jsx');
 
 const mapStateToProps = state => ({
   auth: state.auth,
@@ -16,7 +17,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 let RSVP = (props) => {
-  const { handleSubmit, pristine, reset, submitting, auth, loginUser } = props;
+  const { handleSubmit, pristine, reset, submitting, auth, loginUser, menuOptions } = props;
   return (
     <div>
       <Login open={!auth.isAuthenticated} onLogin={loginUser} />
@@ -36,15 +37,7 @@ let RSVP = (props) => {
             <label htmlFor="canCome"><Field name="canCome" component="input" type="radio" value="no" /> No</label>
           </div>
         </div>
-        <div className="form-group">
-          <label className="col-sm-2 control-label" htmlFor="foodChoice">What would you like to eat?</label>
-          <div className="radio col-sm-10">
-            <label htmlFor="foodChoice"><Field name="foodChoice" component="input" type="radio" value="meat" /> Haggis</label>
-          </div>
-          <div className="radio col-sm-10">
-            <label htmlFor="foodChoice"><Field name="foodChoice" component="input" type="radio" value="vegetarian" /> Veggie haggis</label>
-          </div>
-        </div>
+        <Menu options={menuOptions} />
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-10">
             <button className="btn btn-primary" type="submit" disabled={pristine || submitting}>Submit</button>
@@ -65,6 +58,12 @@ RSVP.propTypes = {
     isAuthenticated: React.PropTypes.bool
   }),
   loginUser: React.PropTypes.func,
+  menuOptions: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      value: React.PropTypes.string.isRequired,
+      label: React.PropTypes.string.isRequired
+    })
+  ).isRequired
 };
 
 RSVP = reduxForm({ form: 'simple' })(RSVP);
