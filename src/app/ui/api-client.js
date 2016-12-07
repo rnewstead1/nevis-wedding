@@ -20,6 +20,19 @@ const login = (credentials) => {
     });
 };
 
-module.exports = {
-  login
-};
+const saveForm = values =>
+  fetch('/api/rsvp', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+    body: JSON.stringify(values)
+  }).then((response) => {
+    if (!response.ok) {
+      return Promise.reject(response.status);
+    }
+    console.log(`Submitted:\n\n${JSON.stringify(values)}`);
+  }).catch(err => console.log('Error: ', err));
+
+module.exports = { login, saveForm };
