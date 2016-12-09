@@ -9,6 +9,7 @@ class Login extends React.Component {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
     this.handlePhraseChange = this.handlePhraseChange.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
     this.state = {
       phrase: '',
       open: this.props.open
@@ -37,6 +38,13 @@ class Login extends React.Component {
       });
   }
 
+  onKeyPress(e) {
+    if (e.key === 'Enter') {
+      e.nativeEvent.preventDefault();
+      this.onSubmit();
+    }
+  }
+
   handlePhraseChange(e) {
     this.setState({ phrase: e.target.value });
   }
@@ -59,7 +67,7 @@ class Login extends React.Component {
           <div className="form-group">
             <label className="col-sm-3 control-label" htmlFor="phrase">Phrase</label>
             <div className="col-sm-9">
-              <input type="text" name="phrase" value={this.state.phrase} onChange={this.handlePhraseChange} />
+              <input type="text" name="phrase" value={this.state.phrase} onChange={this.handlePhraseChange} onKeyPress={this.onKeyPress} />
             </div>
           </div>
           <div className="formGroup">
