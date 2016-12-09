@@ -11,10 +11,12 @@ class AuthenticationWrapper extends React.Component {
     };
   }
 
-  onLogin() {
-    this.setState({
-      isAuthenticated: true
-    });
+  onLogin(error) {
+    if (!error) {
+      this.setState({
+        isAuthenticated: true
+      });
+    }
   }
 
   render() {
