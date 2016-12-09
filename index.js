@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
-const app = require('./src/app/index');
+const app = require('./src/app/init');
 const debug = require('debug')('nevis-range:server');
 const http = require('http');
 

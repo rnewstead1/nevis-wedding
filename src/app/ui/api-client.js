@@ -8,7 +8,7 @@ const login = (credentials) => {
     body: `name=${credentials.name}&phrase=${credentials.phrase}`
   };
 
-  return fetch('api/session/create', config)
+  return fetch('api/authenticate', config)
     .then((response) => {
       if (!response.ok) {
         return Promise.reject('failed login');

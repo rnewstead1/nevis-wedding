@@ -6,10 +6,11 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
 const MongoClient = require('mongodb').MongoClient;
+const rsvpController = require('./controllers/rsvp');
+const authController = require('./controllers/auth');
 
 const app = express();
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -28,7 +29,10 @@ app.use(require('node-sass-middleware')({
 app.use(express.static(path.join(__dirname, '../../public')));
 
 MongoClient.connect(process.env.MONGODB_URI)
-  .then(db => routes(app, db))
+  .then((db) => {
+    const controllers = { rsvp: rsvpController(db), auth: authController() };
+    routes(app, controllers);
+  })
   .catch(err => console.log('err: ', err));
 
 module.exports = app;
