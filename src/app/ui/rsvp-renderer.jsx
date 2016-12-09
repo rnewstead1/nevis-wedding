@@ -8,6 +8,7 @@ const { default: ReduxThunk } = require('redux-thunk');
 const auth = require('./reducers/authentication');
 const { saveForm } = require('./api-client');
 const RSVP = require('./components/RSVP.jsx');
+const AuthenticationWrapper = require('./components/AuthenticationWrapper.jsx');
 
 const menuOptions = [
   { value: 'meat', label: 'Haggis' },
@@ -21,9 +22,15 @@ const reducer = combineReducers({
 });
 const store = createStore(reducer, applyMiddleware(ReduxThunk, createLogger()));
 
-ReactDOM.render(
+const content = (
   <Provider store={store}>
     <RSVP onSubmit={saveForm} menuOptions={menuOptions} />
-  </Provider>,
+  </Provider>
+);
+
+const isAuthenticated = Boolean(!global.document.cookie.indexOf('id_token'));
+
+ReactDOM.render(
+  <AuthenticationWrapper isAuthenticated={isAuthenticated} content={content} />,
   document.getElementById('content')
 );

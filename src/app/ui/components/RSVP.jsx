@@ -20,6 +20,7 @@ let RSVP = (props) => {
   const { handleSubmit, pristine, reset, submitting, auth, loginUser, menuOptions } = props;
   return (
     <div>
+      <h1>RSVP</h1>
       <Login open={!auth.isAuthenticated} onLogin={loginUser} />
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <div className="form-group">
