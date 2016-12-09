@@ -24,11 +24,11 @@ class Login extends React.Component {
 
   onSubmit() {
     login({ phrase: this.state.phrase })
-      .then(() => {
+      .then((names) => {
         this.setState({
           open: Boolean(global.document.cookie.indexOf('id_token'))
         });
-        if (this.props.onLogin) this.props.onLogin();
+        if (this.props.onLogin) this.props.onLogin(null, names);
       })
       .catch((err) => {
         if (this.props.onLogin) this.props.onLogin(err);

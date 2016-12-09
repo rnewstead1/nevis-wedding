@@ -31,7 +31,7 @@ module.exports = (app, db) => {
   apiRouter.post('/session/create', (req, res) => {
     if (req.body.phrase === 'phrase') {
       res.status(200);
-      return res.json({ user: { id_token: 'token' } });
+      return res.json({ user: { id_token: 'token', names: 'Simon and Liz' } });
     }
     res.status(401);
     return res.json({ error: 'invalid name or phrase ' });

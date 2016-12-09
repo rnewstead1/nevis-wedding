@@ -7,14 +7,16 @@ class AuthenticationWrapper extends React.Component {
     super(props);
     this.onLogin = this.onLogin.bind(this);
     this.state = {
-      isAuthenticated: this.props.isAuthenticated
+      isAuthenticated: this.props.isAuthenticated,
+      guests: ''
     };
   }
 
-  onLogin(error) {
+  onLogin(error, names) {
     if (!error) {
       this.setState({
-        isAuthenticated: true
+        isAuthenticated: true,
+        guests: names
       });
     }
   }
@@ -27,7 +29,12 @@ class AuthenticationWrapper extends React.Component {
         </div>
       );
     }
-    return this.props.content;
+    return (
+      <div>
+        {this.state.guests ? <h1>Welcome {this.state.guests}</h1> : false}
+        {this.props.content}
+      </div>
+    );
   }
 }
 

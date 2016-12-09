@@ -17,6 +17,7 @@ const login = (credentials) => {
     }).then(({ user }) => {
       const oneHourFromNow = new Date(new Date().getTime() + 600000).toUTCString();
       global.document.cookie = `id_token=${user.id_token};expires=${oneHourFromNow}`;
+      return user.names;
     });
 };
 

@@ -11,8 +11,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginUser(err) {
-    return dispatch(login(err));
+  loginUser(err, names) {
+    return dispatch(login(err, names));
   },
 });
 
@@ -20,7 +20,7 @@ let RSVP = (props) => {
   const { handleSubmit, pristine, reset, submitting, auth, loginUser, menuOptions } = props;
   return (
     <div>
-      <h1>RSVP</h1>
+      <h2>RSVP</h2>
       <Login open={!auth.isAuthenticated} onLogin={loginUser} />
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <div className="form-group">
