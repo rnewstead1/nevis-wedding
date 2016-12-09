@@ -1,5 +1,5 @@
 const React = require('react');
-const { Field, reduxForm } = require('redux-form');
+const { Field, FieldArray, reduxForm } = require('redux-form');
 const { connect } = require('react-redux');
 const { loginUser: login } = require('../actions/login');
 
@@ -16,6 +16,52 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+  <div className="form-group">
+    <label className="col-sm-2 control-label" htmlFor={label}>{label}</label>
+    <div>
+      <input className="col-sm-10" {...input} type={type} placeholder={label} name={label} />
+      {touched && error && <span>{error}</span>}
+    </div>
+  </div>
+);
+
+const renderGuests = ({ fields, menuOptions, meta: { touched, error } }) => (
+  <ul className="list-group">
+    <li className="list-group-item">
+      <button type="button" className="btn btn-lg btn-block" onClick={() => fields.push({})}>
+        <span className="glyphicon glyphicon-plus" aria-hidden="true" />
+        Add guest</button>
+      {touched && error && <span>{error}</span>}
+    </li>
+
+    {fields.map((guest, index) =>
+      <li key={index} className="list-group-item">
+        <button
+          type="button"
+          className="btn btn-danger btn-sm"
+          title="Remove guest"
+          onClick={() => fields.remove(index)}
+        >
+          <span className="glyphicon glyphicon-trash" aria-hidden="true" />
+        </button>
+        <h4>Guest #{index + 1}</h4>
+        <Field name={`${guest}.name`} component={renderField} type="text" label="Name" />
+        <div className="form-group">
+          <label className="col-sm-2 control-label" htmlFor={`${guest}.canCome`}>Can you make it?</label>
+          <div className="radio radio-inline">
+            <label htmlFor="canCome"><Field name={`${guest}.canCome`} component="input" type="radio" value="yes" /> Yes</label>
+          </div>
+          <div className="radio radio-inline">
+            <label htmlFor="canCome"><Field name={`${guest}.canCome`} component="input" type="radio" value="no" /> No</label>
+          </div>
+        </div>
+        <Menu options={menuOptions} guest={guest} />
+      </li>
+    )}
+  </ul>
+);
+
 let RSVP = (props) => {
   const { handleSubmit, pristine, reset, submitting, auth, loginUser, menuOptions } = props;
   return (
@@ -23,31 +69,45 @@ let RSVP = (props) => {
       <h2>RSVP</h2>
       <Login open={!auth.isAuthenticated} onLogin={loginUser} />
       <form className="form-horizontal" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label className="col-sm-2 control-label" htmlFor="name">Who are you?</label>
-          <div className="col-sm-10">
-            <Field name="name" component="input" type="text" />
-          </div>
-        </div>
-        <div className="form-group">
-          <label className="col-sm-2 control-label" htmlFor="canCome">Can you make it?</label>
-          <div className="radio col-sm-10">
-            <label htmlFor="canCome"><Field name="canCome" component="input" type="radio" value="yes" /> Yes</label>
-          </div>
-          <div className="radio col-sm-10">
-            <label htmlFor="canCome"><Field name="canCome" component="input" type="radio" value="no" /> No</label>
-          </div>
-        </div>
-        <Menu options={menuOptions} />
+        <FieldArray name="guests" component={renderGuests} menuOptions={menuOptions} />
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-10">
             <button className="btn btn-primary" type="submit" disabled={pristine || submitting}>Submit</button>
-            <button className="btn btn-default" type="button" disabled={pristine || submitting} onClick={reset}>Start over</button>
+            <button className="btn btn-default" type="button" disabled={pristine || submitting} onClick={reset}>Start again</button>
           </div>
         </div>
       </form>
     </div>
   );
+};
+
+renderField.propTypes = {
+  input: React.PropTypes.shape({
+    name: React.PropTypes.string
+  }),
+  label: React.PropTypes.string,
+  type: React.PropTypes.string,
+  meta: React.PropTypes.shape({
+    touched: React.PropTypes.bool,
+    error: React.PropTypes.string
+  })
+};
+
+renderGuests.propTypes = {
+  fields: React.PropTypes.shape({
+    guest: React.PropTypes.string,
+    index: React.PropTypes.number
+  }),
+  menuOptions: React.PropTypes.arrayOf(
+      React.PropTypes.shape({
+        value: React.PropTypes.string.isRequired,
+        label: React.PropTypes.string.isRequired
+      })
+    ).isRequired,
+  meta: React.PropTypes.shape({
+    touched: React.PropTypes.bool,
+    error: React.PropTypes.string
+  })
 };
 
 RSVP.propTypes = {
