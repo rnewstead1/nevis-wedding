@@ -2,8 +2,7 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 
 const AuthenticationWrapper = require('./components/AuthenticationWrapper.jsx');
-
-const isAuthenticated = Boolean(!global.document.cookie.indexOf('id_token'));
+const { isAuthenticated } = require('./is-authenticated');
 
 const content = (
   <div>
@@ -14,6 +13,6 @@ const content = (
 );
 
 ReactDOM.render(
-  <AuthenticationWrapper isAuthenticated={isAuthenticated} content={content} />,
+  <AuthenticationWrapper isAuthenticated={isAuthenticated()} content={content} />,
   document.getElementById('content')
 );

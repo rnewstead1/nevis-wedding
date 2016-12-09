@@ -2,6 +2,7 @@ const React = require('react');
 const Modal = require('react-modal');
 
 const { login } = require('../api-client');
+const { isAuthenticated } = require('../is-authenticated');
 
 class Login extends React.Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class Login extends React.Component {
     login({ phrase: this.state.phrase })
       .then((names) => {
         this.setState({
-          open: Boolean(global.document.cookie.indexOf('id_token'))
+          open: !(isAuthenticated())
         });
         if (this.props.onLogin) this.props.onLogin(null, names);
       })

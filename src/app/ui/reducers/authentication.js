@@ -1,7 +1,8 @@
 const login = require('../actions/login');
+const { isAuthenticated } = require('../is-authenticated');
 
 // we should also check if the token is expired. And valid?
-module.exports = (state = { isAuthenticated: Boolean(!global.document.cookie.indexOf('id_token')) }, action) => {
+module.exports = (state = { isAuthenticated: isAuthenticated() }, action) => {
   switch (action.type) {
     case login.LOGIN_SUCCESS:
       return Object.assign({}, state, {
@@ -15,7 +16,7 @@ module.exports = (state = { isAuthenticated: Boolean(!global.document.cookie.ind
       });
     default:
       return Object.assign({}, state, {
-        isAuthenticated: Boolean(!global.document.cookie.indexOf('id_token'))
+        isAuthenticated: isAuthenticated()
       });
   }
 };
