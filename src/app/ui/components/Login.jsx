@@ -7,10 +7,8 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
     this.handlePhraseChange = this.handlePhraseChange.bind(this);
     this.state = {
-      name: '',
       phrase: '',
       open: this.props.open
     };
@@ -25,7 +23,7 @@ class Login extends React.Component {
   }
 
   onSubmit() {
-    login({ name: this.state.name, phrase: this.state.phrase })
+    login({ phrase: this.state.phrase })
       .then(() => {
         this.setState({
           open: Boolean(global.document.cookie.indexOf('id_token'))
@@ -36,10 +34,6 @@ class Login extends React.Component {
         if (this.props.onLogin) this.props.onLogin(err);
         else console.log('Error logging in');
       });
-  }
-
-  handleNameChange(e) {
-    this.setState({ name: e.target.value });
   }
 
   handlePhraseChange(e) {
@@ -61,12 +55,6 @@ class Login extends React.Component {
     return (
       <Modal isOpen={this.state.open} onAfterOpen={() => { }} onRequestClose={() => { }} closeTimeoutMS={5} style={style} contentLabel="Modal">
         <form className="form-horizontal">
-          <div className="form-group">
-            <label className="col-sm-3 control-label" htmlFor="name">Name</label>
-            <div className="col-sm-9">
-              <input type="text" name="name" value={this.state.name} onChange={this.handleNameChange} />
-            </div>
-          </div>
           <div className="form-group">
             <label className="col-sm-3 control-label" htmlFor="phrase">Phrase</label>
             <div className="col-sm-9">

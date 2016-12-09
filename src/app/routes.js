@@ -29,7 +29,7 @@ module.exports = (app, db) => {
   });
 
   apiRouter.post('/session/create', (req, res) => {
-    if (req.body.name === 'name' && req.body.phrase === 'phrase') {
+    if (req.body.phrase === 'phrase') {
       res.status(200);
       return res.json({ user: { id_token: 'token' } });
     }
