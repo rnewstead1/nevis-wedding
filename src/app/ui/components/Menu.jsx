@@ -4,10 +4,11 @@ const { Field } = require('redux-form');
 const Menu = ({ options, guest }) =>
   (
     <div className="form-group">
-      <label className=" col-sm-2 control-label" htmlFor="foodChoice">What would you like to eat?</label>
+      <label className="col-sm-3 control-label" htmlFor="foodChoice">What would you like to eat?</label>
 
-      <div className="col-sm-10">
-        <Field name={`${guest}.foodChoice`} component="select">
+      <div className="col-sm-3">
+        <Field name={`${guest}.foodChoice`} component="select" className="col-sm-9">
+          <option disabled hidden />
           {
             options.map((option, i) =>
               <option key={`${guest}.foodChoice-${i}`} value={`${option.value}`}>{`${option.label}`}</option>
