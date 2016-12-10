@@ -8,6 +8,8 @@ const routes = require('./routes');
 const MongoClient = require('mongodb').MongoClient;
 const rsvpController = require('./controllers/rsvp');
 const sessionController = require('./controllers/session');
+const contentController = require('./controllers/content');
+const localData = require('./local-data');
 
 const app = express();
 
@@ -31,19 +33,14 @@ app.use(express.static(path.join(__dirname, '../../public')));
 MongoClient.connect(process.env.MONGODB_URI)
   .then((db) => {
     if (app.get('env') === 'development') {
-      const collection = db.collection('phrases');
-      collection.count()
-        .then((count) => {
-          if (count === 0) {
-            collection.insertMany([
-              { phrase: 'sky', names: 'Froome and G' },
-              { phrase: 'movistar', names: 'Quintana' }
-            ]);
-          }
-        });
+      localData(db);
     }
 
-    const controllers = { rsvp: rsvpController(db), session: sessionController(db) };
+    const controllers = {
+      rsvp: rsvpController(db),
+      session: sessionController(db),
+      content: contentController(db)
+    };
     routes(app, controllers);
   })
   .catch(err => console.log('err: ', err));

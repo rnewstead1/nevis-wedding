@@ -38,4 +38,18 @@ const saveForm = values =>
     console.log(`Submitted:\n\n${JSON.stringify(values)}`);
   }).catch(err => console.log('Error: ', err));
 
-module.exports = { login, saveForm };
+const getContent = pageType =>
+  fetch(`/api/content/${pageType}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+  }).then((response) => {
+    if (!response.ok) {
+      return Promise.reject(response.status);
+    }
+    return response.json();
+  }).catch(err => console.log('Error: ', err));
+
+module.exports = { login, saveForm, getContent };
