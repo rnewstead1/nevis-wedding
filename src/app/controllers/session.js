@@ -21,11 +21,11 @@ module.exports = (db) => {
     if (!req.cookies.id_token) {
       return res.sendStatus(401);
     }
-    jwt.verify(req.cookies.id_token, process.env.SECRET, (err) => {
-      if (err) {
-        return res.sendStatus(401);
+    jwt.verify(req.cookies.id_token, process.env.SECRET, (err, decrypted) => {
+      if (decrypted.phrase && decrypted.names) {
+        return next();
       }
-      return next();
+      return res.sendStatus(401);
     });
   };
 
