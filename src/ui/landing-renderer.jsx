@@ -21,8 +21,11 @@ const content = wedding => (
 
 apiClient.getContent('landing')
   .then((wedding) => {
-    ReactDOM.render(
-      <AuthenticationWrapper isAuthenticated={isAuthenticated()} content={content(wedding)} />,
-      document.getElementById('content')
-    );
+    let element;
+    if (!wedding) {
+      element = <div>Oops, something went wrong...</div>;
+    } else {
+      element = <AuthenticationWrapper isAuthenticated={isAuthenticated()} content={content(wedding)} />;
+    }
+    ReactDOM.render(element, document.getElementById('content'));
   });
