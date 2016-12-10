@@ -6,7 +6,7 @@
     "start": "npm run build-assets && node index.js",
     "lint": "node_modules/eslint/bin/eslint.js --ext .js,.jsx ./src ./test index.js",
     "build-assets": "node_modules/webpack/bin/webpack.js",
-    "dev": "MONGODB_URI=mongodb://localhost:27017/nevis DEBUG=nevis-range:* node_modules/nodemon/bin/nodemon.js -e js,jsx,hbs,json --watch src/ --exec 'npm run start'",
+    "dev": "node_modules/nodemon/bin/nodemon.js -e js,jsx,hbs,json --watch src/ --exec 'npm run start'",
     "precommit": "npm run lint"
   },
   "engines": {
@@ -20,10 +20,12 @@
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
+    "dotenv": "^2.0.0",
     "es6-promise": "^4.0.5",
     "express": "~4.14.0",
     "hbs": "~4.0.1",
     "isomorphic-fetch": "^2.2.1",
+    "jsonwebtoken": "^7.2.1",
     "mongodb": "^2.2.11",
     "morgan": "~1.7.0",
     "node-sass-middleware": "0.9.8",

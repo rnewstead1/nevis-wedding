@@ -7,3 +7,4 @@ System requirements:
 To run you will need to set the following environment variables:
 
 - MONGODB_URI
+- SECRET (for signing / verifying jwt tokens on login)

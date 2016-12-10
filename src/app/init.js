@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const routes = require('./routes');
 const MongoClient = require('mongodb').MongoClient;
 const rsvpController = require('./controllers/rsvp');
-const authController = require('./controllers/auth');
+const sessionController = require('./controllers/session');
 
 const app = express();
 
@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, '../../public')));
 
 MongoClient.connect(process.env.MONGODB_URI)
   .then((db) => {
-    const controllers = { rsvp: rsvpController(db), auth: authController() };
+    const controllers = { rsvp: rsvpController(db), session: sessionController() };
     routes(app, controllers);
   })
   .catch(err => console.log('err: ', err));

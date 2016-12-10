@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
+require('dotenv').config();
 const app = require('./src/app/init');
 const debug = require('debug')('nevis-range:server');
 const http = require('http');

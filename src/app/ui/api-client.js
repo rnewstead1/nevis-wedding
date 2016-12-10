@@ -1,6 +1,8 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
+const millisInTwentyFourHours = (24 * 60 * 60 * 1000);
+
 const login = (credentials) => {
   const config = {
     method: 'POST',
@@ -8,15 +10,15 @@ const login = (credentials) => {
     body: `name=${credentials.name}&phrase=${credentials.phrase}`
   };
 
-  return fetch('api/authenticate', config)
+  return fetch('api/session/create', config)
     .then((response) => {
       if (!response.ok) {
         return Promise.reject('failed login');
       }
       return response.json();
     }).then(({ user }) => {
-      const oneHourFromNow = new Date(new Date().getTime() + 600000).toUTCString();
-      global.document.cookie = `id_token=${user.id_token};expires=${oneHourFromNow}`;
+      const twentyFourHoursFromNow = new Date(new Date().getTime() + millisInTwentyFourHours).toUTCString();
+      global.document.cookie = `id_token=${user.id_token};expires=${twentyFourHoursFromNow}`;
       return user.names;
     });
 };
