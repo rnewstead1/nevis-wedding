@@ -10,9 +10,7 @@ module.exports = (app, controllers) => {
   app.use('/', appRouter);
 
   apiRouter.put('/rsvp', session.verify, rsvp.save);
-
   apiRouter.post('/session/create', session.create);
-
   app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler

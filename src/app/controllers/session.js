@@ -1,17 +1,20 @@
 const jwt = require('jsonwebtoken');
 
-module.exports = () => {
+module.exports = (db) => {
   const create = (req, res) => {
-    if (req.body.phrase === 'phrase') {
-      const user = { user: { phrase: req.body.phrase, names: 'Simon and Liz' } };
-      const jwtToken = jwt.sign(user, process.env.SECRET, { expiresIn: '24h' });
-      user.id_token = jwtToken;
+    const collection = db.collection('phrases');
+    collection.findOne({ phrase: req.body.phrase })
+      .then((found) => {
+        if (!found) {
+          res.status(401);
+          return res.json({ error: 'invalid name or phrase ' });
+        }
+        const user = { phrase: found.phrase, names: found.names };
+        const jwtToken = jwt.sign(user, process.env.SECRET, { expiresIn: '24h' });
 
-      res.status(200);
-      return res.json({ user });
-    }
-    res.status(401);
-    return res.json({ error: 'invalid name or phrase ' });
+        res.status(200);
+        return res.json({ user: { names: user.names, id_token: jwtToken } });
+      });
   };
 
   const verify = (req, res, next) => {
