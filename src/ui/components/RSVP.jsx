@@ -1,14 +1,22 @@
 const React = require('react');
-const { Field, FieldArray, reduxForm } = require('redux-form');
+const { Field, FieldArray, reduxForm, formValueSelector } = require('redux-form');
 const { connect } = require('react-redux');
 const { loginUser: login } = require('../actions/login');
 
 const Login = require('./Login.jsx');
 const Menu = require('./Menu.jsx');
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-});
+const selector = formValueSelector('rsvpForm');
+
+const mapStateToProps = (state) => {
+  const guests = selector(state, 'guests');
+  const canCome = guests ? guests.map(guest => guest.canCome === 'yes') : [];
+
+  return {
+    auth: state.auth,
+    canCome
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   loginUser(err, names) {
@@ -26,7 +34,7 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
   </div>
 );
 
-const renderGuests = ({ fields, menuOptions, meta: { touched, error } }) => (
+const renderGuests = ({ fields, menuOptions, canCome, meta: { touched, error } }) => (
   <ul className="list-group">
     <li className="list-group-item">
       <button type="button" className="btn btn-lg btn-block" onClick={() => fields.push({})}>
@@ -56,20 +64,20 @@ const renderGuests = ({ fields, menuOptions, meta: { touched, error } }) => (
             <label htmlFor="canCome"><Field name={`${guest}.canCome`} component="input" type="radio" value="no" /> No</label>
           </div>
         </div>
-        <Menu options={menuOptions} guest={guest} />
+        {canCome[index] && <Menu options={menuOptions} guest={guest} />}
       </li>
     )}
   </ul>
 );
 
 let RSVP = (props) => {
-  const { handleSubmit, pristine, reset, submitting, auth, loginUser, menuOptions } = props;
+  const { handleSubmit, pristine, reset, submitting, auth, loginUser, menuOptions, canCome } = props;
   return (
     <div>
       <h2>RSVP</h2>
       <Login open={!auth.isAuthenticated} onLogin={loginUser} />
       <form className="form-horizontal" onSubmit={handleSubmit}>
-        <FieldArray name="guests" component={renderGuests} menuOptions={menuOptions} />
+        <FieldArray name="guests" component={renderGuests} menuOptions={menuOptions} canCome={canCome} />
         <div className="form-group">
           <div className="col-sm-offset-3 col-sm-9">
             <button className="btn btn-primary" type="submit" disabled={pristine || submitting}>Submit</button>
@@ -104,6 +112,7 @@ renderGuests.propTypes = {
         label: React.PropTypes.string.isRequired
       })
     ).isRequired,
+  canCome: React.PropTypes.arrayOf(React.PropTypes.bool),
   meta: React.PropTypes.shape({
     touched: React.PropTypes.bool,
     error: React.PropTypes.string
@@ -124,10 +133,11 @@ RSVP.propTypes = {
       value: React.PropTypes.string.isRequired,
       label: React.PropTypes.string.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  canCome: React.PropTypes.arrayOf(React.PropTypes.bool)
 };
 
-RSVP = reduxForm({ form: 'simple' })(RSVP);
+RSVP = reduxForm({ form: 'rsvpForm' })(RSVP);
 RSVP = connect(mapStateToProps, mapDispatchToProps)(RSVP);
 
 module.exports = RSVP;
