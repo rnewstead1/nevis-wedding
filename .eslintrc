@@ -12,6 +12,7 @@
     "max-len": 0,
     "no-param-reassign": [2, { "props": false }],
     "consistent-return": 0,
-    "comma-dangle": 0
+    "comma-dangle": 0,
+    "no-plusplus": [2, { "allowForLoopAfterthoughts": true }]
   }
 }

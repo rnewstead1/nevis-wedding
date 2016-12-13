@@ -29,7 +29,7 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
     <label className="col-sm-3 control-label" htmlFor={label}>{label}</label>
     <div>
       <input {...input} type={type} placeholder={label} name={label} />
-      {touched && error && <span>{error}</span>}
+      {touched && error && <span className="text-danger"> {error}</span>}
     </div>
   </div>
 );
@@ -89,6 +89,24 @@ let RSVP = (props) => {
   );
 };
 
+const validate = (values) => {
+  const errors = {};
+
+  if (values.guests) {
+    errors.guests = [];
+    for (let ii = 0; ii < values.guests.length; ii++) {
+      errors.guests[ii] = {};
+      if (!values.guests[ii].name) {
+        errors.guests[ii].name = 'Please enter your name';
+      } else if (values.guests[ii].name.length < 5) {
+        errors.guests[ii].name = 'Please enter your full name';
+      }
+    }
+  }
+
+  return errors;
+};
+
 renderField.propTypes = {
   input: React.PropTypes.shape({
     name: React.PropTypes.string
@@ -137,7 +155,7 @@ RSVP.propTypes = {
   canCome: React.PropTypes.arrayOf(React.PropTypes.bool)
 };
 
-RSVP = reduxForm({ form: 'rsvpForm' })(RSVP);
+RSVP = reduxForm({ form: 'rsvpForm', validate })(RSVP);
 RSVP = connect(mapStateToProps, mapDispatchToProps)(RSVP);
 
 module.exports = RSVP;
