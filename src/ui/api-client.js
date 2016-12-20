@@ -1,3 +1,5 @@
+import { SubmissionError } from 'redux-form';
+
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
@@ -24,19 +26,29 @@ const login = (credentials) => {
 };
 
 const saveForm = values =>
-  fetch('/api/rsvp', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'same-origin',
-    body: JSON.stringify(values)
-  }).then((response) => {
-    if (!response.ok) {
-      return Promise.reject(response.status);
-    }
-    console.log(`Submitted:\n\n${JSON.stringify(values)}`);
-  }).catch(err => console.log('Error: ', err));
+  new Promise((resolve, reject) =>
+    fetch('/api/rsvp', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify(values)
+    }).then((response) => {
+      if (response.status === 400) {
+        return response.json().then((json) => {
+          throw new SubmissionError(json);
+        });
+      } else if (!response.ok) {
+        return reject(response.status);
+      }
+      console.log(`Submitted:\n\n${JSON.stringify(values)}`);
+      resolve();
+    }).catch((err) => {
+      console.log('Error: ', err);
+      reject(err);
+    })
+  );
 
 const getContent = pageType =>
   fetch(`/api/content/${pageType}`, {

@@ -73,10 +73,11 @@ const renderGuests = ({ fields, menuOptions, canCome, hasDiet, meta: { touched, 
 );
 
 let RSVP = (props) => {
-  const { handleSubmit, pristine, reset, submitting, auth, loginUser, menuOptions, canCome, hasDiet } = props;
+  const { handleSubmit, pristine, reset, submitting, auth, loginUser, menuOptions, canCome, hasDiet, error } = props;
   return (
     <div>
       <h2>RSVP</h2>
+      {error && <p className="bg-danger text-center">{error}</p>}
       <Login open={!auth.isAuthenticated} onLogin={loginUser} />
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <FieldArray name="guests" component={renderGuests} menuOptions={menuOptions} canCome={canCome} hasDiet={hasDiet} />
@@ -157,6 +158,7 @@ RSVP.propTypes = {
   ).isRequired,
   canCome: React.PropTypes.arrayOf(React.PropTypes.bool),
   hasDiet: React.PropTypes.arrayOf(React.PropTypes.bool),
+  error: React.PropTypes.string
 };
 
 RSVP = reduxForm({ form: 'rsvpForm', validate })(RSVP);
