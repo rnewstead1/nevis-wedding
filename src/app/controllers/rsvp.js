@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 module.exports = (db) => {
   const save = (req, res) => {
     // Dummy validation error
@@ -12,10 +14,13 @@ module.exports = (db) => {
       return res.status(400).json(submissionErrors);
     }
 
+    const userDetails = jwt.verify(req.cookies.id_token, process.env.SECRET);
+    const phrase = userDetails.phrase;
+
     const collection = db.collection('guests');
-    return collection.insertOne(req.body)
+    return collection.insertOne({ phrase: userDetails.phrase, rsvp: req.body })
       .then(() => {
-        console.log('Saved ', req.body);
+        console.log('Saved ', phrase, ' => ', req.body);
         return res.sendStatus(201);
       })
       .catch((err) => {
