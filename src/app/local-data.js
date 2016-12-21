@@ -19,7 +19,8 @@ module.exports = (db) => {
           date: 'Saturday 10th December 2016',
           time: '18:30 until late',
           location: 'The Sir Chris Hoy Velodrome, Glasgow, Scotland',
-          imageUrl: '/images/development/velodrome.jpg'
+          imageUrl: '/images/development/velodrome.jpg',
+          email: '10golds@anticlockwise.com'
         });
       }
     });

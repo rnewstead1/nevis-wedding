@@ -10,7 +10,7 @@ const content = wedding => (
     <img src={wedding.imageUrl} className="img-responsive img-rounded" alt="wedding" />
     <div className="text-center">
       <p>Thank you for your response</p>
-      <p>If you have any questions please contact us at {wedding.email}</p>
+      <p>If you have any questions <a href={`mailto:${wedding.email}`}>please contact us</a>.</p>
     </div>
   </div>
 );
@@ -26,8 +26,3 @@ apiClient.getContent('landing')
     }
     ReactDOM.render(element, document.getElementById('content'));
   });
-
-ReactDOM.render(
-  <AuthenticationWrapper isAuthenticated={isAuthenticated()} content={content} />,
-  document.getElementById('content')
-);
