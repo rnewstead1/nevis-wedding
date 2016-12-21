@@ -1,7 +1,8 @@
 module.exports = {
   entry: {
     'rsvp-form': './src/ui/rsvp-renderer.jsx',
-    landing: './src/ui/landing-renderer.jsx'
+    landing: './src/ui/landing-renderer.jsx',
+    'rsvp-response': './src/ui/rsvp-response-renderer.jsx'
   },
   output: {
     path: __dirname,

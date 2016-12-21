@@ -6,7 +6,8 @@
   ],
   "globals": {
     "document": true,
-    "fetch": true
+    "fetch": true,
+    "window": true
   },
   "rules": {
     "max-len": 0,

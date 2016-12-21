@@ -7,6 +7,7 @@ module.exports = (app, controllers) => {
   const { rsvp, session, content } = controllers;
   appRouter.get('/', (req, res) => res.render('landing', { title: 'Nevis wedding' }));
   appRouter.get('/rsvp', (req, res) => res.render('rsvp', { title: 'RSVP' }));
+  appRouter.get('/rsvp-response', (req, res) => res.render('rsvp-response', { title: 'Thank you' }));
   app.use('/', appRouter);
 
   apiRouter.put('/rsvp', session.verify, rsvp.save);

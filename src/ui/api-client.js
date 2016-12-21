@@ -43,6 +43,7 @@ const saveForm = values =>
         return reject(response.status);
       }
       console.log(`Submitted:\n\n${JSON.stringify(values)}`);
+      window.location.href = '/rsvp-response';
       resolve();
     }).catch((err) => {
       console.log('Error: ', err);
