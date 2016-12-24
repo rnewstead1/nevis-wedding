@@ -5,10 +5,9 @@ const Menu = ({ options, guest, hasDiet }) =>
   (
     <div>
       <div className="form-group">
-        <label className="col-sm-3 control-label" htmlFor="foodChoice">What would you like to eat?</label>
-
-        <div className="col-sm-9">
-          <Field name={`${guest}.foodChoice`} component="select" className="col-sm-12">
+        <label className="control-label" htmlFor="foodChoice">What would you like to eat?</label>
+        <div>
+          <Field name={`${guest}.foodChoice`} component="select" className="form-control">
             <option disabled hidden />
             {
               options.map((option, i) =>
@@ -20,20 +19,20 @@ const Menu = ({ options, guest, hasDiet }) =>
       </div>
 
       <div className="form-group">
-        <label className="col-sm-3 control-label" htmlFor={`${guest}.canCome`}>Do you have any dietary requirements?</label>
-        <div className="radio radio-inline">
+        <label className="control-label" htmlFor={`${guest}.hasDiet`}>Do you have any dietary requirements?</label>
+        <div className="radio">
           <label htmlFor="canCome"><Field name={`${guest}.hasDiet`} component="input" type="radio" value="yes" /> Yes</label>
         </div>
-        <div className="radio radio-inline">
+        <div className="radio">
           <label htmlFor="canCome"><Field name={`${guest}.hasDiet`} component="input" type="radio" value="no" /> No</label>
         </div>
       </div>
 
       {hasDiet &&
         <div className="form-group">
-          <label className="col-sm-3 control-label" htmlFor="foodChoice">Please specify</label>
-          <div className="col-sm-9">
-            <Field name={`${guest}.dietaryReqs`} component="textarea" className="col-sm-12">
+          <label className="control-label" htmlFor={`${guest}.dietaryReqs`}>Please specify</label>
+          <div>
+            <Field name={`${guest}.dietaryReqs`} component="textarea" className="form-control" rows="3">
               <option disabled hidden />
             </Field>
           </div>

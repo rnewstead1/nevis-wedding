@@ -28,18 +28,15 @@ const mapDispatchToProps = dispatch => ({
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
   <div className="form-group">
-    <label className="col-sm-3 control-label" htmlFor={label}>{label}</label>
-    <div className="col-sm-9">
-      <input {...input} type={type} placeholder={label} name={label} className="col-sm-12" />
-      {touched && error && <span className="text-danger"> {error}</span>}
-    </div>
+    <input {...input} type={type} placeholder={label} name={label} className="form-control input-lg" />
+    {touched && error && <span className="text-danger"> {error}</span>}
   </div>
 );
 
 const renderGuests = ({ fields, menuOptions, canCome, hasDiet, meta: { touched, error } }) => (
   <ul className="list-group">
     <li className="list-group-item">
-      <button type="button" className="btn btn-lg btn-block" onClick={() => fields.push({})}>
+      <button type="button" className="btn btn-lg btn-block btn-default" onClick={() => fields.push({})}>
         <span className="glyphicon glyphicon-plus" aria-hidden="true" />
         Add guest</button>
       {touched && error && <span>{error}</span>}
@@ -55,15 +52,13 @@ const renderGuests = ({ fields, menuOptions, canCome, hasDiet, meta: { touched, 
         >
           <span className="glyphicon glyphicon-trash" aria-hidden="true" />
         </button>
-        <h4>Guest #{index + 1}</h4>
         <Field name={`${guest}.name`} component={renderField} type="text" label="Name" />
         <div className="form-group">
-          <label className="col-sm-3 control-label" htmlFor={`${guest}.canCome`}>Can you make it?</label>
-          <div className="radio radio-inline">
-            <label htmlFor="canCome"><Field name={`${guest}.canCome`} component="input" type="radio" value="yes" /> Yes</label>
+          <div className="radio">
+            <label htmlFor={`${guest}.canCome`}><Field name={`${guest}.canCome`} component="input" type="radio" value="yes" /> Yes, I can come</label>
           </div>
-          <div className="radio radio-inline">
-            <label htmlFor="canCome"><Field name={`${guest}.canCome`} component="input" type="radio" value="no" /> No</label>
+          <div className="radio">
+            <label htmlFor={`${guest}.canCome`}><Field name={`${guest}.canCome`} component="input" type="radio" value="no" /> No, I can&apos;t come</label>
           </div>
         </div>
         {canCome[index] && <Menu options={menuOptions} guest={guest} hasDiet={hasDiet[index]} />}
@@ -79,13 +74,11 @@ let RSVP = (props) => {
       <h2>RSVP</h2>
       {error && <p className="bg-danger text-center">{error}</p>}
       <Login open={!auth.isAuthenticated} onLogin={loginUser} />
-      <form className="form-horizontal" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <FieldArray name="guests" component={renderGuests} menuOptions={menuOptions} canCome={canCome} hasDiet={hasDiet} />
-        <div className="form-group">
-          <div className="col-sm-offset-3 col-sm-9">
-            <button className="btn btn-primary" type="submit" disabled={pristine || submitting}>Submit</button>
-            <button className="btn btn-default" type="button" disabled={pristine || submitting} onClick={reset}>Start again</button>
-          </div>
+        <div className="form-group btn-toolbar">
+          <button className="btn btn-primary" type="submit" disabled={pristine || submitting}>Submit</button>
+          <button className="btn btn-default" type="button" disabled={pristine || submitting} onClick={reset}>Start again</button>
         </div>
       </form>
     </div>
