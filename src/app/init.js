@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
 const MongoClient = require('mongodb').MongoClient;
+const emailSenderCtr = require('./email-sender');
 const rsvpController = require('./controllers/rsvp');
 const sessionController = require('./controllers/session');
 const contentController = require('./controllers/content');
@@ -30,14 +31,16 @@ app.use(require('node-sass-middleware')({
 
 app.use(express.static(path.join(__dirname, '../../public')));
 
-MongoClient.connect(process.env.MONGODB_URI)
+const emailSender = emailSenderCtr();
+
+emailSender.init()
+  .then(() => MongoClient.connect(process.env.MONGODB_URI))
   .then((db) => {
     if (app.get('env') === 'development') {
       localData(db);
     }
-
     const controllers = {
-      rsvp: rsvpController(db),
+      rsvp: rsvpController(db, emailSender),
       session: sessionController(db),
       content: contentController(db)
     };
