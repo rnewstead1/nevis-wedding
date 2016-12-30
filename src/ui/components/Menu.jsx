@@ -6,16 +6,16 @@ const Menu = ({ options, guest, hasDiet }) =>
     <div>
       <div className="form-group">
         <label className="control-label" htmlFor="foodChoice">What would you like to eat?</label>
-        <div>
-          <Field name={`${guest}.foodChoice`} component="select" className="form-control">
-            <option disabled hidden />
-            {
-              options.map((option, i) =>
-                <option key={`${guest}.foodChoice-${i}`} value={`${option.value}`}>{`${option.label}`}</option>
-              )
-            }
-          </Field>
-        </div>
+        {
+          options.map(option =>
+            <div className="radio">
+              <label htmlFor={`${option.value}`}>
+                <Field name={`${guest}.foodChoice`} component="input" type="radio" value={`${option.value}`} />
+                {`${option.label}`}
+              </label>
+            </div>
+            )
+        }
       </div>
 
       <div className="form-group">
