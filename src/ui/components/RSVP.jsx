@@ -76,6 +76,7 @@ let RSVP = (props) => {
       <Login open={!auth.isAuthenticated} onLogin={loginUser} />
       <form onSubmit={handleSubmit}>
         <FieldArray name="guests" component={renderGuests} menuOptions={menuOptions} canCome={canCome} hasDiet={hasDiet} />
+        <Field name="email" component={renderField} type="text" label="Contact email" />
         <div className="form-group btn-toolbar">
           <button className="btn btn-primary" type="submit" disabled={pristine || submitting}>Submit</button>
           <button className="btn btn-default" type="button" disabled={pristine || submitting} onClick={reset}>Start again</button>
@@ -98,6 +99,8 @@ const validate = (values) => {
         errors.guests[ii].name = 'Please enter your full name';
       }
     }
+  } else {
+    errors._error = 'You must add some guests!';
   }
 
   return errors;

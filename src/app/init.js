@@ -31,21 +31,22 @@ app.use(require('node-sass-middleware')({
 
 app.use(express.static(path.join(__dirname, '../../public')));
 
-const emailSender = emailSenderCtr();
-
-emailSender.init()
-  .then(() => MongoClient.connect(process.env.MONGODB_URI))
+MongoClient.connect(process.env.MONGODB_URI)
   .then((db) => {
     if (app.get('env') === 'development') {
       localData(db);
     }
-    const controllers = {
-      rsvp: rsvpController(db, emailSender),
-      session: sessionController(db),
-      content: contentController(db)
-    };
-    routes(app, controllers);
-  })
-  .catch(err => console.log('err: ', err));
+    return db;
+  }).then(db =>
+  emailSenderCtr(db)
+    .then((emailSender) => {
+      const controllers = {
+        rsvp: rsvpController(db, emailSender),
+        session: sessionController(db),
+        content: contentController(db)
+      };
+      routes(app, controllers);
+    })
+).catch(err => console.log('err: ', err));
 
 module.exports = app;

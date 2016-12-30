@@ -19,7 +19,7 @@ module.exports = (db, emailSender) => {
 
     const collection = db.collection('guests');
     return collection.insertOne({ phrase: userDetails.phrase, rsvp: req.body })
-      .then(() => emailSender.sendMail(req.body.guests))
+      .then(() => emailSender.sendMail(req.body.email, req.body.guests))
       .then(() => {
         console.log('Saved ', phrase, ' => ', req.body);
         return res.sendStatus(201);
