@@ -1,10 +1,6 @@
-module.exports = (db) => {
-  const landing = (req, res) => {
-    const wedding = db.collection('wedding');
-
-    return wedding.findOne()
-      .then(result => res.json(result));
-  };
+module.exports = (wedding) => {
+  const landing = (req, res) => wedding.getWeddingDetails()
+    .then(result => res.json(result));
 
   return { landing };
 };

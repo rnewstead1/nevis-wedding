@@ -10,7 +10,7 @@ const emailSenderCtr = require('./email/email-sender');
 const rsvpController = require('./controllers/rsvp');
 const sessionController = require('./controllers/session');
 const contentController = require('./controllers/content');
-const wedding = require('./store/wedding');
+const weddingCtr = require('./store/wedding');
 const localData = require('./local-data');
 
 const app = express();
@@ -49,16 +49,19 @@ MongoClient.connect(process.env.MONGODB_URI)
       localData(db);
     }
     return db;
-  }).then(db =>
-  emailSenderCtr(config, wedding(db))
-    .then((emailSender) => {
-      const controllers = {
-        rsvp: rsvpController(db, emailSender),
-        session: sessionController(db),
-        content: contentController(db)
-      };
-      routes(app, controllers);
-    })
-).catch(err => console.log('err: ', err));
+  })
+  .then((db) => {
+    const wedding = weddingCtr(db);
+    return emailSenderCtr(config, wedding)
+      .then((emailSender) => {
+        const controllers = {
+          rsvp: rsvpController(db, emailSender),
+          session: sessionController(db),
+          content: contentController(wedding)
+        };
+        routes(app, controllers);
+      });
+  })
+  .catch(err => console.log('err: ', err));
 
 module.exports = app;
