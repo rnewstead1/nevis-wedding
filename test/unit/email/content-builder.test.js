@@ -16,5 +16,10 @@ describe('content-builder', () => {
       const html = guestContent.html({}, [{ canCome: 'yes' }, { canCome: 'no' }]);
       expect(html).not.to.contain('We are delighted');
     });
+
+    it('should include "We are sorry..." in html if all guests cannot come', () => {
+      const html = guestContent.html({}, [{ canCome: 'no' }, { canCome: 'no' }]);
+      expect(html).to.contain('We are sorry');
+    });
   });
 });
