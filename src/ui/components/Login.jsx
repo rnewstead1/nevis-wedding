@@ -63,15 +63,15 @@ class Login extends React.Component {
 
     return (
       <Modal isOpen={this.state.open} onAfterOpen={() => { }} onRequestClose={() => { }} closeTimeoutMS={5} style={style} contentLabel="Modal">
-        <form className="form-horizontal">
+        <form className="form">
           <div className="form-group">
-            <label className="col-sm-3 control-label" htmlFor="phrase">Phrase</label>
-            <div className="col-sm-9">
-              <input type="text" name="phrase" value={this.state.phrase} onChange={this.handlePhraseChange} onKeyPress={this.onKeyPress} />
+            <label className="control-label" htmlFor="phrase">Please enter the code from your invitation</label>
+            <div>
+              <input type="text" name="phrase" className="form-control input-lg" value={this.state.phrase} onChange={this.handlePhraseChange} onKeyPress={this.onKeyPress} />
             </div>
           </div>
           <div className="formGroup">
-            <button type="button" onClick={this.onSubmit}>Enter</button>
+            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.onSubmit}>Enter</button>
           </div>
         </form>
       </Modal>
