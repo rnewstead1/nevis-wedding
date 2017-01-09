@@ -6,10 +6,11 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
 const MongoClient = require('mongodb').MongoClient;
-const emailSenderCtr = require('./email-sender');
+const emailSenderCtr = require('./email/email-sender');
 const rsvpController = require('./controllers/rsvp');
 const sessionController = require('./controllers/session');
 const contentController = require('./controllers/content');
+const wedding = require('./store/wedding');
 const localData = require('./local-data');
 
 const app = express();
@@ -31,6 +32,17 @@ app.use(require('node-sass-middleware')({
 
 app.use(express.static(path.join(__dirname, '../../public')));
 
+const config = {
+  emailFromAddress: process.env.EMAIL_USER,
+  emailFromPassword: process.env.EMAIL_PASS,
+  emailToOwnersAddress: process.env.EMAIL_RECIPIENTS,
+  shouldEmail: process.env.SHOULD_EMAIL
+};
+
+if (config.shouldEmail) {
+  console.log('Email sending turned on.');
+}
+
 MongoClient.connect(process.env.MONGODB_URI)
   .then((db) => {
     if (app.get('env') === 'development') {
@@ -38,7 +50,7 @@ MongoClient.connect(process.env.MONGODB_URI)
     }
     return db;
   }).then(db =>
-  emailSenderCtr(db)
+  emailSenderCtr(config, wedding(db))
     .then((emailSender) => {
       const controllers = {
         rsvp: rsvpController(db, emailSender),
