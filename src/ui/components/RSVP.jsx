@@ -35,12 +35,7 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
 
 const renderGuests = ({ fields, menuOptions, canCome, hasDiet, meta: { touched, error } }) => (
   <ul className="list-group">
-    <li className="list-group-item">
-      <button type="button" className="btn btn-lg btn-block btn-default" onClick={() => fields.push({})}>
-        <span className="glyphicon glyphicon-plus" aria-hidden="true" />
-        Add guest</button>
-      {touched && error && <span>{error}</span>}
-    </li>
+    {touched && error && <span>{error}</span>}
 
     {fields.map((guest, index) =>
       <li key={index} className="list-group-item">
@@ -64,6 +59,12 @@ const renderGuests = ({ fields, menuOptions, canCome, hasDiet, meta: { touched, 
         {canCome[index] && <Menu options={menuOptions} guest={guest} hasDiet={hasDiet[index]} />}
       </li>
     )}
+
+    <li className="list-group-item">
+      <button type="button" className="btn btn-default" onClick={() => fields.push({})}>
+        <span className="glyphicon glyphicon-plus" aria-hidden="true" />
+        Add guest</button>
+    </li>
   </ul>
 );
 
