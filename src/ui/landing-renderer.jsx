@@ -14,7 +14,7 @@ const content = wedding => (
       <p>{wedding.date}</p>
       <p>{wedding.time}</p>
       <address>{wedding.location}</address>
-      <a href="/rsvp">Please RSVP</a>
+      <a className="btn btn-primary btn-lg btn-custom" href="/rsvp">RSVP</a>
     </div>
   </div>
 );

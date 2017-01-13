@@ -71,7 +71,7 @@ class Login extends React.Component {
             </div>
           </div>
           <div className="formGroup">
-            <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.onSubmit}>Enter</button>
+            <button type="button" className="btn btn-primary btn-lg btn-block btn-custom" onClick={this.onSubmit}>Enter</button>
           </div>
         </form>
       </Modal>

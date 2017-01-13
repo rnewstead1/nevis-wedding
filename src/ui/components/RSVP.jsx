@@ -79,8 +79,8 @@ let RSVP = (props) => {
         <FieldArray name="guests" component={renderGuests} menuOptions={menuOptions} canCome={canCome} hasDiet={hasDiet} />
         <Field name="email" component={renderField} type="text" label="Contact email" />
         <div className="form-group btn-toolbar">
-          <button className="btn btn-primary" type="submit" disabled={pristine || submitting}>Submit</button>
-          <button className="btn btn-default" type="button" disabled={pristine || submitting} onClick={reset}>Start again</button>
+          <button className="btn btn-primary btn-custom" type="submit" disabled={pristine || submitting}>Submit</button>
+          <button className="btn btn-default btn-custom" type="button" disabled={pristine || submitting} onClick={reset}>Start again</button>
         </div>
       </form>
     </div>
