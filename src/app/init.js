@@ -12,6 +12,7 @@ const sessionController = require('./controllers/session');
 const contentController = require('./controllers/content');
 const weddingCtr = require('./store/wedding');
 const localData = require('./local-data');
+const images = require('./store/images');
 
 const app = express();
 
@@ -50,6 +51,10 @@ MongoClient.connect(process.env.MONGODB_URI)
     }
     return db;
   })
+  .then(db =>
+    images.writeFilesFromDb(db)
+      .then(() => db)
+  )
   .then((db) => {
     const wedding = weddingCtr(db);
     return emailSenderCtr(config, wedding)
