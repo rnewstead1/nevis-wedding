@@ -18,16 +18,23 @@ module.exports = (db, emailSender) => {
     const phrase = userDetails.phrase;
 
     const collection = db.collection('guests');
-    return collection.insertOne({ phrase: userDetails.phrase, rsvp: req.body })
-      .then(() => emailSender.sendMail(req.body.email, req.body.guests))
-      .then(() => {
-        console.log('Saved ', phrase, ' => ', req.body);
-        return res.sendStatus(201);
-      })
-      .catch((err) => {
-        console.log('Something went wrong submitting rsvp details', err);
-        return res.sendStatus(500);
-      });
+
+    collection.findOne({ phrase }).then((rsvp) => {
+      if (rsvp) {
+        return res.status(400).json({ _error: 'Response already received' });
+      }
+
+      return collection.insertOne({ phrase: userDetails.phrase, rsvp: req.body })
+        .then(() => emailSender.sendMail(req.body.email, req.body.guests))
+        .then(() => {
+          console.log('Saved ', phrase, ' => ', req.body);
+          return res.sendStatus(201);
+        })
+        .catch((err) => {
+          console.log('Something went wrong submitting rsvp details', err);
+          return res.sendStatus(500);
+        });
+    });
   };
 
   const status = (req, res) => {
