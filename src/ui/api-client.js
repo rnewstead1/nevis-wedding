@@ -65,4 +65,18 @@ const getContent = pageType =>
     return response.json();
   }).catch(err => console.log('Error: ', err));
 
-module.exports = { login, saveForm, getContent };
+const getRsvpStatus = () =>
+  fetch('/api/rsvp-status', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+  }).then((response) => {
+    if (!response.ok) {
+      return Promise.reject(response.status);
+    }
+    return response.json();
+  }).catch(err => console.log('Error: ', err));
+
+module.exports = { login, saveForm, getContent, getRsvpStatus };

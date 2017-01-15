@@ -11,6 +11,7 @@ module.exports = (app, controllers) => {
   app.use('/', appRouter);
 
   apiRouter.put('/rsvp', session.verify, rsvp.save);
+  apiRouter.get('/rsvp-status', session.verify, rsvp.status);
   apiRouter.post('/session/create', session.create);
   apiRouter.get('/content/landing', content.landing);
   app.use('/api', apiRouter);

@@ -10,6 +10,7 @@ const { saveForm } = require('./api-client');
 const RSVP = require('./components/RSVP.jsx');
 const AuthenticationWrapper = require('./components/AuthenticationWrapper.jsx');
 const { isAuthenticated } = require('./is-authenticated');
+const apiClient = require('./api-client');
 
 const menuOptions = [
   { value: 'meat', label: 'Haggis' },
@@ -23,13 +24,21 @@ const reducer = combineReducers({
 });
 const store = createStore(reducer, applyMiddleware(ReduxThunk, createLogger()));
 
-const content = (
-  <Provider store={store}>
-    <RSVP onSubmit={saveForm} menuOptions={menuOptions} />
-  </Provider>
-);
+apiClient.getRsvpStatus().then((response) => {
+  console.log('RSVP response status is ', response);
 
-ReactDOM.render(
-  <AuthenticationWrapper isAuthenticated={isAuthenticated()} content={content} />,
-  document.getElementById('content')
-);
+  if (response.rsvped) {
+    ReactDOM.render(<h4>Thanks, we have already received your response</h4>, document.getElementById('content'));
+  } else {
+    const content = (
+      <Provider store={store}>
+        <RSVP onSubmit={saveForm} menuOptions={menuOptions} />
+      </Provider>
+      );
+
+    ReactDOM.render(
+      <AuthenticationWrapper isAuthenticated={isAuthenticated()} content={content} />,
+      document.getElementById('content')
+    );
+  }
+}).catch(err => console.log('rsvp-renderer error', err));
