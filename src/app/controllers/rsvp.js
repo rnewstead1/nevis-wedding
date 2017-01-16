@@ -1,16 +1,44 @@
 const jwt = require('jsonwebtoken');
 
+const submitValidation = (body) => {
+  const submissionErrors = {};
+  const guests = [];
+  let foundError = false;
+
+  if (body.guests.length === 0) {
+    return [true, { _error: 'Please enter at least one guest' }];
+  }
+
+  for (let ii = 0; ii < body.guests.length; ii++) {
+    const guest = body.guests[ii];
+    const guestErrors = {};
+    console.log('Guest is ', guest);
+    if (!guest.name) {
+      guestErrors.name = 'Please enter a name';
+      foundError = true;
+    }
+
+    if (!guest.canCome) {
+      guestErrors.canCome = 'Please enter a response';
+      foundError = true;
+    }
+
+    guests[ii] = guestErrors;
+  }
+
+  if (guests.length !== 0) {
+    console.log('errors are', guests);
+    submissionErrors.guests = guests;
+  } else
+    console.log('no errors', guests);
+  return [foundError, submissionErrors];
+};
+
 module.exports = (db, emailSender) => {
   const save = (req, res) => {
-    // Dummy validation error
-    if (!req.body.guests[0].name.includes(' ')) {
-      const guests = [];
-      guests[0] = {};
-      guests[0].name = 'Please enter your full name';
-      const submissionErrors = {};
-      submissionErrors.guests = guests;
-      submissionErrors._error = 'Server side validation error';
+    const [foundError, submissionErrors] = submitValidation(req.body);
 
+    if (foundError) {
       return res.status(400).json(submissionErrors);
     }
 
