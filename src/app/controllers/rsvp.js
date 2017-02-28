@@ -29,8 +29,9 @@ const submitValidation = (body) => {
   if (guests.length !== 0) {
     console.log('errors are', guests);
     submissionErrors.guests = guests;
-  } else
+  } else {
     console.log('no errors', guests);
+  }
   return [foundError, submissionErrors];
 };
 

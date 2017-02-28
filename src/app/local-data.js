@@ -17,10 +17,11 @@ module.exports = (db) => {
         wedding.insertOne({
           brideAndGroom: 'Jason and Laura',
           date: 'Saturday 10th December 2016',
-          time: '18:30 until late',
+          time: '6pm until late',
           location: 'The Sir Chris Hoy Velodrome, Glasgow, Scotland',
           imageUrl: '/images/development/velodrome.jpg',
-          email: '10golds@anticlockwise.com'
+          email: '10golds@anticlockwise.com',
+          moreInfo: '<div>It will be great!</div>'
         });
       }
     });

@@ -2,22 +2,9 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 
 const AuthenticationWrapper = require('./components/AuthenticationWrapper.jsx');
+const Landing = require('./components/Landing.jsx');
 const { isAuthenticated } = require('./is-authenticated');
 const apiClient = require('./api-client');
-
-const content = wedding => (
-  <div>
-    <img src={wedding.imageUrl} className="img-responsive img-rounded" alt="wedding" />
-    <div className="text-center">
-      <span className="lead">{wedding.brideAndGroom}</span>
-      <p>would love you to join us for our wedding</p>
-      <p>{wedding.date}</p>
-      <p>{wedding.time}</p>
-      <address>{wedding.location}</address>
-      <a className="btn btn-primary btn-lg btn-custom" href="/rsvp">RSVP</a>
-    </div>
-  </div>
-);
 
 apiClient.getContent('landing')
   .then((wedding) => {
@@ -25,7 +12,8 @@ apiClient.getContent('landing')
     if (!wedding) {
       element = <div>Oops, something went wrong...</div>;
     } else {
-      element = <AuthenticationWrapper isAuthenticated={isAuthenticated()} content={content(wedding)} />;
+      const content = <Landing wedding={wedding} />;
+      element = <AuthenticationWrapper isAuthenticated={isAuthenticated()} content={content} />;
     }
     ReactDOM.render(element, document.getElementById('content'));
   });
