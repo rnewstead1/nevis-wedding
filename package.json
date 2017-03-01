@@ -7,7 +7,7 @@
     "start": "npm run build-assets && node index.js",
     "lint": "node_modules/eslint/bin/eslint.js --ext .js,.jsx ./src ./test index.js",
     "build-assets": "node_modules/webpack/bin/webpack.js",
-    "dev": "node_modules/nodemon/bin/nodemon.js -e js,jsx,hbs,json --watch src/ --exec 'npm run start'",
+    "dev": "mkdir -p public/images/db ; cp public/images/development/*.jpg public/images/db/ ; node_modules/nodemon/bin/nodemon.js -e js,jsx,hbs,json --watch src/ --exec 'npm run start'",
     "precommit": "npm run lint",
     "prepush": "npm run test"
   },
