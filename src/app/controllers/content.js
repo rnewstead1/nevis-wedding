@@ -1,6 +1,6 @@
 module.exports = (wedding) => {
-  const landing = (req, res) => wedding.getWeddingDetails()
+  const invitation = (req, res) => wedding.getWeddingDetails()
     .then(result => res.json(result));
 
-  return { landing };
+  return { invitation };
 };

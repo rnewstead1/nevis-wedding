@@ -15,7 +15,7 @@ const content = wedding => (
   </div>
 );
 
-apiClient.getContent('landing')
+apiClient.getContent('invitation')
   .then((wedding) => {
     console.log('Rendering response', wedding);
     let element;

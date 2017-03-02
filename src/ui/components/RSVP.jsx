@@ -72,7 +72,6 @@ let RSVP = (props) => {
   const { handleSubmit, pristine, reset, submitting, auth, loginUser, menuOptions, canCome, hasDiet, error } = props;
   return (
     <div>
-      <h2>RSVP</h2>
       {error && <p className="bg-danger text-center">{error}</p>}
       <Login open={!auth.isAuthenticated} onLogin={loginUser} />
       <form onSubmit={handleSubmit}>

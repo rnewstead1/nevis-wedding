@@ -43,6 +43,7 @@ const saveForm = values =>
         return reject(response.status);
       }
       console.log(`Submitted:\n\n${JSON.stringify(values)}`);
+      // TODO use redux action / reducer to set rsvped state in RSVP component to show Thank You content and avoid this redirect & extra page
       window.location.href = '/rsvp-response';
       resolve();
     }).catch((err) => {
