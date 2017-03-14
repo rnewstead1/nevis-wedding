@@ -31,9 +31,10 @@ Promise.all([getContent('invitation'), getRsvpStatus()])
     if (!wedding) {
       element = <div>Oops, something went wrong...</div>;
     } else {
+      const hasRsvped = rsvpResponse ? rsvpResponse.rsvped : false;
       const content = (
         <Provider store={store}>
-          <Invitation rsvpSubmit={saveForm} menuOptions={menuOptions} wedding={wedding} hasRsvped={rsvpResponse.rsvped} />
+          <Invitation rsvpSubmit={saveForm} menuOptions={menuOptions} wedding={wedding} hasRsvped={hasRsvped} />
         </Provider>
       );
       element = <AuthenticationWrapper isAuthenticated={isAuthenticated()} content={content} />;
