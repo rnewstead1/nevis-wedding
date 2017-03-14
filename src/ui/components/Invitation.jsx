@@ -3,7 +3,7 @@ const { default: ReactHtmlParser } = require('react-html-parser');
 
 const RSVP = require('./RSVP.jsx');
 
-class Landing extends React.Component {
+class Invitation extends React.Component {
   constructor(props) {
     super(props);
     this.toggleMoreInfo = this.toggleMoreInfo.bind(this);
@@ -85,7 +85,7 @@ class Landing extends React.Component {
   }
 }
 
-Landing.propTypes = {
+Invitation.propTypes = {
   wedding: React.PropTypes.shape({
     imageUrl: React.PropTypes.string,
     brideAndGroom: React.PropTypes.string,
@@ -99,4 +99,4 @@ Landing.propTypes = {
   hasRsvped: React.PropTypes.bool
 };
 
-module.exports = Landing;
+module.exports = Invitation;
