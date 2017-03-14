@@ -66,18 +66,5 @@ module.exports = (db, emailSender) => {
     });
   };
 
-  const status = (req, res) => {
-    const userDetails = jwt.verify(req.cookies.id_token, process.env.SECRET);
-    const userPhrase = userDetails.phrase;
-    const collection = db.collection('guests');
-
-    collection.findOne({ phrase: userPhrase }).then((rsvp) => {
-      if (rsvp) {
-        return res.status(200).json({ rsvped: true });
-      }
-      return res.status(200).json({ rsvped: false });
-    });
-  };
-
-  return { save, status };
+  return { save };
 };

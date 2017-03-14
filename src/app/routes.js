@@ -4,14 +4,13 @@ const appRouter = express.Router();
 const apiRouter = express.Router();
 
 module.exports = (app, controllers) => {
-  const { rsvp, session, content } = controllers;
+  const { rsvp, session, invitation } = controllers;
   appRouter.get('/', (req, res) => res.render('invitation', { title: 'Nevis wedding' }));
   app.use('/', appRouter);
 
   apiRouter.put('/rsvp', session.verify, rsvp.save);
-  apiRouter.get('/rsvp-status', session.verify, rsvp.status);
   apiRouter.post('/session/create', session.create);
-  apiRouter.get('/content/invitation', content.invitation);
+  apiRouter.get('/invitation', invitation.get);
   app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler

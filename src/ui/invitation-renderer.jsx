@@ -7,7 +7,7 @@ const createLogger = require('redux-logger');
 const { default: ReduxThunk } = require('redux-thunk');
 
 const auth = require('./reducers/authentication');
-const { saveForm, getContent, getRsvpStatus } = require('./api-client');
+const { saveForm, getInvitation } = require('./api-client');
 const AuthenticationWrapper = require('./components/AuthenticationWrapper.jsx');
 const { isAuthenticated } = require('./is-authenticated');
 const Invitation = require('./components/Invitation.jsx');
@@ -25,16 +25,15 @@ const reducer = combineReducers({
 const store = createStore(reducer, applyMiddleware(ReduxThunk, createLogger()));
 
 // TODO single api call here
-Promise.all([getContent('invitation'), getRsvpStatus()])
-  .then(([wedding, rsvpResponse]) => {
+getInvitation()
+  .then((response) => {
     let element;
-    if (!wedding) {
+    if (!response.wedding) {
       element = <div>Oops, something went wrong...</div>;
     } else {
-      const hasRsvped = rsvpResponse ? rsvpResponse.rsvped : false;
       const content = (
         <Provider store={store}>
-          <Invitation rsvpSubmit={saveForm} menuOptions={menuOptions} wedding={wedding} hasRsvped={hasRsvped} />
+          <Invitation rsvpSubmit={saveForm} menuOptions={menuOptions} wedding={response.wedding} hasRsvped={response.rsvped} />
         </Provider>
       );
       element = <AuthenticationWrapper isAuthenticated={isAuthenticated()} content={content} />;

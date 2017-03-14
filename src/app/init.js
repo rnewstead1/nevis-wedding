@@ -9,7 +9,7 @@ const MongoClient = require('mongodb').MongoClient;
 const emailSenderCtr = require('./email/email-sender');
 const rsvpController = require('./controllers/rsvp');
 const sessionController = require('./controllers/session');
-const contentController = require('./controllers/content');
+const invitationController = require('./controllers/invitation');
 const weddingCtr = require('./store/wedding');
 const localData = require('./local-data');
 const images = require('./store/images');
@@ -62,7 +62,7 @@ MongoClient.connect(process.env.MONGODB_URI)
         const controllers = {
           rsvp: rsvpController(db, emailSender),
           session: sessionController(db),
-          content: contentController(wedding)
+          invitation: invitationController(db, wedding)
         };
         routes(app, controllers);
       });
