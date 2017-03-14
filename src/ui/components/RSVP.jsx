@@ -99,8 +99,6 @@ const validate = (values) => {
         errors.guests[ii].name = 'Please enter your full name';
       }
     }
-  } else {
-    errors._error = 'You must add some guests!';
   }
 
   return errors;

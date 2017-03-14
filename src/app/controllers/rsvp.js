@@ -5,7 +5,7 @@ const submitValidation = (body) => {
   const guests = [];
   let foundError = false;
 
-  if (body.guests.length === 0) {
+  if (!body.guests || body.guests.length === 0) {
     return [true, { _error: 'Please enter at least one guest' }];
   }
 

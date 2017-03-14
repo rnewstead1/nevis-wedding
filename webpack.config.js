@@ -1,7 +1,6 @@
 module.exports = {
   entry: {
     invitation: './src/ui/invitation-renderer.jsx',
-    'rsvp-response': './src/ui/rsvp-response-renderer.jsx'
   },
   output: {
     path: __dirname,

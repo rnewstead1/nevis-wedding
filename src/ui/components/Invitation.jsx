@@ -8,9 +8,11 @@ class Landing extends React.Component {
     super(props);
     this.toggleMoreInfo = this.toggleMoreInfo.bind(this);
     this.toggleShowRsvp = this.toggleShowRsvp.bind(this);
+    this.submitAndUpdate = this.submitAndUpdate.bind(this);
     this.state = {
       moreInfo: false,
-      showRsvp: false
+      showRsvp: false,
+      justSubmitted: false
     };
   }
 
@@ -44,12 +46,27 @@ class Landing extends React.Component {
     }
   }
 
+  submitAndUpdate(values) {
+    this.props.rsvpSubmit(values).then(() => {
+      this.setState({
+        justSubmitted: true
+      });
+    });
+  }
+
   render() {
-    const { wedding, rsvpSubmit, menuOptions, hasRsvped } = this.props;
-    const { moreInfo, showRsvp } = this.state;
+    const { wedding, menuOptions, hasRsvped } = this.props;
+    const { moreInfo, showRsvp, justSubmitted } = this.state;
     const moreInfoButtonText = moreInfo ? 'Hide info' : 'More info';
     const rsvpButtonText = showRsvp ? 'Hide RSVP' : 'RSVP';
-    const rsvp = hasRsvped ? <p>We have already received your RSVP response.</p> : <RSVP onSubmit={rsvpSubmit} menuOptions={menuOptions} />;
+    let rsvp;
+    if (hasRsvped) {
+      rsvp = <p>We have already received your RSVP response.</p>;
+    } else if (justSubmitted) {
+      rsvp = <p>Thank you for your response. If you have any questions <a href={`mailto:${wedding.email}`}>please contact us</a>.</p>;
+    } else {
+      rsvp = <RSVP onSubmit={this.submitAndUpdate} menuOptions={menuOptions} />;
+    }
     return (
       <div>
         <div className="text-center">
