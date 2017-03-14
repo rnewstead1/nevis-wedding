@@ -21,7 +21,7 @@ module.exports = (config, wedding) => {
   const emailToOwners = guests => ({
     from: emailFromAddress,
     to: emailToOwnersAddress,
-    subject: ownerContent.subject,
+    subject: ownerContent.subject(guests),
     text: ownerContent.text(guests),
     html: ownerContent.html(guests)
   });
