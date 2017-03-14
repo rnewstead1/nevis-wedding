@@ -1,6 +1,6 @@
 import { SubmissionError } from 'redux-form';
 
-require('es6-promise').polyfill(); // Is this causing the 404?
+require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 const millisInTwentyFourHours = (24 * 60 * 60 * 1000);
