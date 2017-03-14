@@ -24,7 +24,6 @@ const reducer = combineReducers({
 });
 const store = createStore(reducer, applyMiddleware(ReduxThunk, createLogger()));
 
-// TODO single api call here
 getInvitation()
   .then((response) => {
     let element;

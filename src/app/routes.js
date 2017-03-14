@@ -16,12 +16,12 @@ module.exports = (app, controllers) => {
 // catch 404
   app.use((req, res) => {
     res.status(404);
-    res.render('error', { message: 'Page not found' });
+    res.render('error', { message: 'Page not found', title: 'Not found' });
   });
 
 // error handler
   app.use((err, req, res) => {
     res.status(err.status || 500);
-    res.render('error', { message: 'Oops, something went wrong!' });
+    res.render('error', { message: 'Oops, something went wrong!', title: 'Error' });
   });
 };

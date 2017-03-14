@@ -11,10 +11,14 @@ const path = require('path');
 
 require('dotenv').config();
 
-const loadFile = filename => ({
-  name: path.basename(filename),
-  data: fs.readFileSync(filename),
-  contentType: 'image/jpeg' });
+const loadFile = (filename) => {
+  const contentType = /\.png/.test(path) ? 'image/png' : 'image/jpeg';
+  return {
+    name: path.basename(filename),
+    data: fs.readFileSync(filename),
+    contentType
+  };
+};
 
 MongoClient.connect(process.env.MONGODB_URI)
   .then((db) => {

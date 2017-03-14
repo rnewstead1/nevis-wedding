@@ -8,7 +8,7 @@ module.exports = (db, wedding) => {
     const userPhrase = userDetails.phrase;
 
     return Promise.all([wedding.getWeddingDetails(), guests.findOne({ phrase: userPhrase })])
-      .then(([weddingDetails, rsvp]) => res.json(Object.assign({}, { wedding: weddingDetails, rsvped: rsvp })));
+      .then(([weddingDetails, rsvp]) => res.json(Object.assign({}, { wedding: weddingDetails, rsvped: Boolean(rsvp) })));
   };
 
   return { get };

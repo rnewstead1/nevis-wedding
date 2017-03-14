@@ -10,6 +10,7 @@ class Invitation extends React.Component {
     this.toggleShowRsvp = this.toggleShowRsvp.bind(this);
     this.submitAndUpdate = this.submitAndUpdate.bind(this);
     this.state = {
+      showContent: true,
       moreInfo: false,
       showRsvp: false,
       justSubmitted: false
@@ -36,12 +37,14 @@ class Invitation extends React.Component {
     const newState = !current;
     if (newState) {
       this.setState({
-        showRsvp: newState,
+        showRsvp: true,
+        showContent: false,
         moreInfo: false
       });
     } else {
       this.setState({
-        showRsvp: newState
+        showRsvp: false,
+        showContent: true
       });
     }
   }
@@ -56,7 +59,7 @@ class Invitation extends React.Component {
 
   render() {
     const { wedding, menuOptions, hasRsvped } = this.props;
-    const { moreInfo, showRsvp, justSubmitted } = this.state;
+    const { showContent, moreInfo, showRsvp, justSubmitted } = this.state;
     const moreInfoButtonText = moreInfo ? 'Hide info' : 'More info';
     const rsvpButtonText = showRsvp ? 'Hide RSVP' : 'RSVP';
     let rsvp;
@@ -69,14 +72,20 @@ class Invitation extends React.Component {
     }
     return (
       <div>
+        <div className="nav">
+          <img className="logo img-responsive pull-left" src="/images/db/logo.png" alt="logo" />
+          <button className="btn btn-secondary btn-lg btn-custom pull-right" onClick={this.toggleMoreInfo}>{moreInfoButtonText}</button>
+          <button className="btn btn-primary btn-lg btn-custom pull-right" onClick={this.toggleShowRsvp}>{rsvpButtonText}</button>
+        </div>
         <div className="text-center">
-          <span className="lead">{wedding.brideAndGroom}</span>
-          <p>would love you to join us for our wedding</p>
-          <p>{wedding.date}</p>
-          <p>{wedding.time}</p>
-          <address>{wedding.location}</address>
-          <button className="btn btn-primary btn-lg btn-custom" onClick={this.toggleShowRsvp}>{rsvpButtonText}</button>
-          <button className="btn btn-secondary btn-lg btn-custom" onClick={this.toggleMoreInfo}>{moreInfoButtonText}</button>
+          {showContent ?
+            <div>
+              <p>You are invited to the wedding of</p>
+              <span className="lead">{wedding.brideAndGroom}</span>
+              <p>{wedding.date}</p>
+              <p>{wedding.time}</p>
+              <address>{wedding.location}</address>
+            </div> : false}
           {moreInfo ? ReactHtmlParser(wedding.moreInfo) : false}
           {showRsvp ? rsvp : false}
         </div>
@@ -87,7 +96,6 @@ class Invitation extends React.Component {
 
 Invitation.propTypes = {
   wedding: React.PropTypes.shape({
-    imageUrl: React.PropTypes.string,
     brideAndGroom: React.PropTypes.string,
     date: React.PropTypes.string,
     time: React.PropTypes.string,
