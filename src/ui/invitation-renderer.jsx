@@ -7,7 +7,7 @@ const { default: ReduxThunk } = require('redux-thunk');
 
 const auth = require('./reducers/authentication');
 
-const AuthenticationWrapper = require('./components/AuthenticationWrapper.jsx');
+const Invitation = require('./components/Invitation');
 const { isAuthenticated } = require('./is-authenticated');
 
 const reducer = combineReducers({
@@ -16,4 +16,4 @@ const reducer = combineReducers({
 });
 const store = createStore(reducer, applyMiddleware(ReduxThunk, createLogger()));
 
-ReactDOM.render(<AuthenticationWrapper store={store} isAuthenticated={isAuthenticated()} />, document.getElementById('content'));
+ReactDOM.render(<Invitation store={store} isAuthenticated={isAuthenticated()} />, document.getElementById('content'));
