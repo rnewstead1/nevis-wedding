@@ -1,5 +1,8 @@
 module.exports = () => {
-  const names = guests => guests.map(guest => guest.name).reduce((first, next) => `${first} and ${next}`);
+  const names = (guests) => {
+    const nameList = guests.map(guest => guest.name);
+    return [nameList.slice(0, -1).join(', '), nameList.slice(-1)[0]].join(nameList.length < 2 ? '' : ' and ');
+  };
 
   const htmlGuestSummary = guests => guests.reduce((first, next) => {
     let nextGuest;
@@ -42,7 +45,7 @@ module.exports = () => {
   const allGuestsCannotCome = guests => guests.filter(guest => guest.canCome === 'yes').length === 0;
 
   const guestResponse = (weddingDetails, guests) => {
-    let response = '<html><body><p>Thank you for RSVPing to our wedding.</p>';
+    let response = `<html><body><p>Dear ${names(guests)}</p></p><p>Thank you for RSVPing to our wedding.</p>`;
     if (allGuestsCannotCome(guests)) {
       response = `${response}<p>We are sorry you are unable to attend</p>`;
     } else {
@@ -51,7 +54,7 @@ module.exports = () => {
       }
       response = `${response}<p>We have received your food choices as detailed below:</p>${foodChoices(guests)}<p>Please contact us if you need to amend your choices.</p>`;
     }
-    return `${response}<p>From, ${weddingDetails.brideAndGroom}</p></p></body></html>`;
+    return `${response}<p>From,</p><p>${weddingDetails.brideAndGroom}</p></body></html>`;
   };
 
   return {
