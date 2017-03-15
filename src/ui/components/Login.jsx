@@ -12,7 +12,8 @@ class Login extends React.Component {
     this.onKeyPress = this.onKeyPress.bind(this);
     this.state = {
       phrase: '',
-      open: this.props.open
+      open: this.props.open,
+      loginError: false
     };
   }
 
@@ -28,13 +29,16 @@ class Login extends React.Component {
     login({ phrase: this.state.phrase })
       .then((names) => {
         this.setState({
-          open: !(isAuthenticated())
+          open: !(isAuthenticated()),
+          loginError: !names
         });
         if (this.props.onLogin) this.props.onLogin(null, names);
       })
       .catch((err) => {
+        this.setState({
+          loginError: true
+        });
         if (this.props.onLogin) this.props.onLogin(err);
-        else console.log('Error logging in');
       });
   }
 
@@ -61,14 +65,17 @@ class Login extends React.Component {
       }
     };
 
+    const { open, phrase, loginError } = this.state;
+
     return (
-      <Modal isOpen={this.state.open} onAfterOpen={() => { }} onRequestClose={() => { }} closeTimeoutMS={5} style={style} contentLabel="Modal">
+      <Modal isOpen={open} onAfterOpen={() => { }} onRequestClose={() => { }} closeTimeoutMS={5} style={style} contentLabel="Modal">
         <form className="form">
           <div className="form-group">
             <label className="control-label" htmlFor="phrase">Please enter the code from your invitation</label>
             <div>
-              <input type="text" name="phrase" className="form-control input-lg" value={this.state.phrase} onChange={this.handlePhraseChange} onKeyPress={this.onKeyPress} />
+              <input type="text" name="phrase" className="form-control input-lg" value={phrase} onChange={this.handlePhraseChange} onKeyPress={this.onKeyPress} />
             </div>
+            {loginError ? <div className="text-danger">Incorrect phrase</div> : false}
           </div>
           <div className="formGroup">
             <button type="button" className="btn btn-primary btn-lg btn-block btn-custom" onClick={this.onSubmit}>Enter</button>
