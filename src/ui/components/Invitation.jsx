@@ -58,7 +58,7 @@ class Invitation extends React.Component {
   }
 
   render() {
-    const { wedding, menuOptions, hasRsvped } = this.props;
+    const { wedding, menuOptions, hasRsvped, guests } = this.props;
     const { showContent, moreInfo, showRsvp, justSubmitted } = this.state;
     const moreInfoButtonText = moreInfo ? 'Hide info' : 'More info';
     const rsvpButtonText = showRsvp ? 'Hide RSVP' : 'RSVP';
@@ -78,6 +78,7 @@ class Invitation extends React.Component {
           <button className="btn btn-primary btn-lg btn-custom pull-right" onClick={this.toggleShowRsvp}>{rsvpButtonText}</button>
         </div>
         <div className="text-center">
+          {guests ? <h1>Welcome {guests}</h1> : false}
           {showContent ?
             <div>
               <p>You are invited to the wedding of</p>
@@ -104,7 +105,8 @@ Invitation.propTypes = {
   }),
   rsvpSubmit: React.PropTypes.func,
   menuOptions: React.PropTypes.arrayOf(React.PropTypes.object),
-  hasRsvped: React.PropTypes.bool
+  hasRsvped: React.PropTypes.bool,
+  guests: React.PropTypes.string
 };
 
 module.exports = Invitation;
