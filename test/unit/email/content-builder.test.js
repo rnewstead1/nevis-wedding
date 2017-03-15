@@ -7,6 +7,11 @@ describe('content-builder', () => {
   describe('email to guests', () => {
     const { guestContent } = contentBuilder;
 
+    it('should include guest names in response', () => {
+      const html = guestContent.html({}, [{ name: 'Froome', canCome: 'yes' }, { name: 'G', canCome: 'yes' }, { name: 'Quintana', canCome: 'yes' }]);
+      expect(html).to.contain('Froome, G and Quintana');
+    });
+
     it('should include "We are delighted..." in html if all guests can come', () => {
       const html = guestContent.html({}, [{ canCome: 'yes' }, { canCome: 'yes' }]);
       expect(html).to.contain('We are delighted');
