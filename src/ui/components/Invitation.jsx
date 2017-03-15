@@ -3,6 +3,7 @@ const { Provider } = require('react-redux');
 const { default: ReactHtmlParser } = require('react-html-parser');
 
 const { saveForm, getInvitation } = require('../api-client');
+const { isAuthenticated } = require('../is-authenticated');
 const RSVP = require('./RSVP.jsx');
 const Login = require('./Login.jsx');
 
@@ -21,7 +22,7 @@ class Invitation extends React.Component {
     this.toggleShowRsvp = this.toggleShowRsvp.bind(this);
     this.submitAndUpdate = this.submitAndUpdate.bind(this);
     this.state = {
-      isAuthenticated: this.props.isAuthenticated,
+      authenticated: isAuthenticated(),
       content: null,
       guests: null,
       showContent: true,
@@ -34,7 +35,7 @@ class Invitation extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.isAuthenticated) {
+    if (this.state.authenticated) {
       this.getInvitationDetails();
     }
   }
@@ -42,7 +43,7 @@ class Invitation extends React.Component {
   onLogin(error, guests) {
     if (!error) {
       this.setState({
-        isAuthenticated: true,
+        authenticated: true,
         guests
       });
       this.getInvitationDetails();
@@ -100,7 +101,7 @@ class Invitation extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, showContent, moreInfo, showRsvp, justSubmitted, guests, wedding, rsvped } = this.state;
+    const { authenticated, showContent, moreInfo, showRsvp, justSubmitted, guests, wedding, rsvped } = this.state;
     const { store } = this.props;
     const moreInfoButtonText = moreInfo ? 'Hide info' : 'More info';
     const rsvpButtonText = showRsvp ? 'Hide RSVP' : 'RSVP';
@@ -112,7 +113,7 @@ class Invitation extends React.Component {
     } else {
       rsvp = <RSVP onSubmit={this.submitAndUpdate} menuOptions={menuOptions} />;
     }
-    if (!isAuthenticated) {
+    if (!authenticated) {
       return (
         <div>
           <Login open onLogin={this.onLogin} />
@@ -147,7 +148,6 @@ class Invitation extends React.Component {
 }
 
 Invitation.propTypes = {
-  isAuthenticated: React.PropTypes.bool,
   store: React.PropTypes.object, // eslint-disable-line
 };
 

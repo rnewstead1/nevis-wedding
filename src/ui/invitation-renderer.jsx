@@ -7,8 +7,7 @@ const { default: ReduxThunk } = require('redux-thunk');
 
 const auth = require('./reducers/authentication');
 
-const Invitation = require('./components/Invitation');
-const { isAuthenticated } = require('./is-authenticated');
+const Invitation = require('./components/Invitation.jsx');
 
 const reducer = combineReducers({
   form: reduxFormReducer,
@@ -16,4 +15,4 @@ const reducer = combineReducers({
 });
 const store = createStore(reducer, applyMiddleware(ReduxThunk, createLogger()));
 
-ReactDOM.render(<Invitation store={store} isAuthenticated={isAuthenticated()} />, document.getElementById('content'));
+ReactDOM.render(<Invitation store={store} />, document.getElementById('content'));
