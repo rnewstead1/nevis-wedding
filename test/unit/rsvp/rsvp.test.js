@@ -5,9 +5,7 @@ const httpMocks = require('node-mocks-http');
 const rsvpController = require('../../../src/app/controllers/rsvp');
 
 describe('rsvp', () => {
-  const { save } = rsvpController(() => console.log('DB'),
-    () => console.log('emailer!'));
-
+  const { save } = rsvpController(() => {}, () => {});
 
   describe('submit bad rsvp', () => {
     const request = httpMocks.createRequest({
@@ -42,13 +40,47 @@ describe('rsvp', () => {
     });
   });
 
+  describe('no email', () => {
+    const response = httpMocks.createResponse();
+    save(httpMocks.createRequest({
+      body: {
+        guests: [{ name: 'guest1' },
+          { canCome: false },
+          {}]
+      }
+    }),
+    response);
+
+    it('should return an error if there is no email address', () => {
+      expect(response._getData()).to.contain('Please enter an email address');
+    });
+  });
+
+  describe('invalid email', () => {
+    const response = httpMocks.createResponse();
+    save(httpMocks.createRequest({
+      body: {
+        guests: [{ name: 'guest1' },
+          { canCome: false },
+          {}],
+        email: 'foo'
+      }
+    }),
+    response);
+
+    it('should return an error if the email address is invalid', () => {
+      expect(response._getData()).to.contain('Please enter a valid email address');
+    });
+  });
+
   describe('all guests should have names and responses', () => {
     const response = httpMocks.createResponse();
     save(httpMocks.createRequest({
       body: {
         guests: [{ name: 'guest1' },
                  { canCome: false },
-                 { }]
+                 { }],
+        email: 'foo@bar.com'
       }
     }),
     response);

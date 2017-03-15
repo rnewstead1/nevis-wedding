@@ -9,10 +9,17 @@ const submitValidation = (body) => {
     return [true, { _error: 'Please enter at least one guest' }];
   }
 
+  if (!body.email) {
+    return [true, { _error: 'Please enter an email address' }];
+  }
+
+  if (!/^\S+@\S+\.[A-Za-z0-9-]{2,}$/.test(body.email)) {
+    return [true, { _error: 'Please enter a valid email address' }];
+  }
+
   for (let ii = 0; ii < body.guests.length; ii++) {
     const guest = body.guests[ii];
     const guestErrors = {};
-    console.log('Guest is ', guest);
     if (!guest.name) {
       guestErrors.name = 'Please enter a name';
       foundError = true;
@@ -27,11 +34,9 @@ const submitValidation = (body) => {
   }
 
   if (guests.length !== 0) {
-    console.log('errors are', guests);
     submissionErrors.guests = guests;
-  } else {
-    console.log('no errors', guests);
   }
+
   return [foundError, submissionErrors];
 };
 
@@ -55,14 +60,8 @@ module.exports = (db, emailSender) => {
 
       return collection.insertOne({ phrase: userDetails.phrase, rsvp: req.body })
         .then(() => emailSender.sendMail(req.body.email, req.body.guests))
-        .then(() => {
-          console.log('Saved ', phrase, ' => ', req.body);
-          return res.sendStatus(201);
-        })
-        .catch((err) => {
-          console.log('Something went wrong submitting rsvp details', err);
-          return res.sendStatus(500);
-        });
+        .then(() => res.sendStatus(201))
+        .catch(() => res.sendStatus(500));
     });
   };
 
