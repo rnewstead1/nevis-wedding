@@ -61,10 +61,14 @@ class Invitation extends React.Component {
   }
 
   submitAndUpdate(values) {
-    saveForm(values).then(() => {
-      this.setState({
-        justSubmitted: true
-      });
+    return new Promise((resolve, reject) => {
+      saveForm(values).then(() => {
+        this.setState({
+          justSubmitted: true
+        });
+        resolve();
+      })
+      .catch(err => reject(err));
     });
   }
 
