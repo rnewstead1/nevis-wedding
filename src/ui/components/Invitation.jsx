@@ -133,11 +133,11 @@ class Invitation extends React.Component {
             <button className="btn btn-primary btn-lg btn-custom pull-right" onClick={this.toggleShowRsvp}><i className="glyphicon glyphicon-envelope" aria-hidden="true" />{rsvpButtonText}</button>
           </div>
           <div className="text-center">
-            {guests ? <h1>Welcome {guests}</h1> : false}
+            {guests ? <p className="lead">Welcome {guests}</p> : false}
             {showContent ?
               <div>
                 <p>You are invited to the wedding of</p>
-                <span className="lead">{wedding.brideAndGroom}</span>
+                <h1>{wedding.brideAndGroom}</h1>
                 <p>{wedding.date}</p>
                 <p>{wedding.time}</p>
                 <address>{wedding.location}</address>
