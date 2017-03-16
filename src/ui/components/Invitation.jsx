@@ -107,7 +107,7 @@ class Invitation extends React.Component {
   render() {
     const { authenticated, showContent, moreInfo, showRsvp, justSubmitted, guests, wedding, rsvped } = this.state;
     const { store } = this.props;
-    const moreInfoButtonText = moreInfo ? 'Hide info' : 'More info';
+    const moreInfoButtonText = moreInfo ? 'Hide details' : 'Details';
     const rsvpButtonText = showRsvp ? 'Hide RSVP' : 'RSVP';
     let rsvp;
     if (rsvped) {
