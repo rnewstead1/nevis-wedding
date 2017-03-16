@@ -130,7 +130,7 @@ class Invitation extends React.Component {
           <div className="nav">
             <img className="logo img-responsive pull-left" src="/images/db/logo.png" alt="logo" />
             <button className="btn btn-secondary btn-lg btn-custom pull-right" onClick={this.toggleMoreInfo}>{moreInfoButtonText}</button>
-            <button className="btn btn-primary btn-lg btn-custom pull-right" onClick={this.toggleShowRsvp}>{rsvpButtonText}</button>
+            <button className="btn btn-primary btn-lg btn-custom pull-right" onClick={this.toggleShowRsvp}><i className="glyphicon glyphicon-envelope" aria-hidden="true" />{rsvpButtonText}</button>
           </div>
           <div className="text-center">
             {guests ? <h1>Welcome {guests}</h1> : false}
