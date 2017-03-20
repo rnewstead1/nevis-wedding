@@ -50,10 +50,10 @@ const renderGuests = ({ fields, menuOptions, canCome, hasDiet, meta: { touched, 
         <Field name={`${guest}.name`} component={renderField} type="text" label="Name" />
         <div className="form-group">
           <div className="radio">
-            <label htmlFor={`${guest}.canCome`}><Field name={`${guest}.canCome`} component="input" type="radio" value="yes" /> Yes, I can come</label>
+            <label htmlFor={`${guest}.canCome`}><Field name={`${guest}.canCome`} component="input" type="radio" value="yes" required /> Yes, I can come</label>
           </div>
           <div className="radio">
-            <label htmlFor={`${guest}.canCome`}><Field name={`${guest}.canCome`} component="input" type="radio" value="no" /> No, I can&apos;t come</label>
+            <label htmlFor={`${guest}.canCome`}><Field name={`${guest}.canCome`} component="input" type="radio" value="no" required /> No, I can&apos;t come</label>
           </div>
         </div>
         {canCome[index] && <Menu options={menuOptions} guest={guest} hasDiet={hasDiet[index]} />}
@@ -95,10 +95,12 @@ const validate = (values) => {
       errors.guests[ii] = {};
       if (!values.guests[ii].name) {
         errors.guests[ii].name = 'Please enter your name';
-      } else if (values.guests[ii].name.length < 5) {
-        errors.guests[ii].name = 'Please enter your full name';
       }
     }
+  }
+
+  if (!values.email) {
+    errors.email = 'Please enter your email address';
   }
 
   return errors;

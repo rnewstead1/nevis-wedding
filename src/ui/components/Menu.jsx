@@ -10,7 +10,7 @@ const Menu = ({ options, guest, hasDiet }) =>
           options.map(option =>
             <div className="radio">
               <label htmlFor={`${option.value}`}>
-                <Field name={`${guest}.foodChoice`} component="input" type="radio" value={`${option.value}`} />
+                <Field name={`${guest}.foodChoice`} component="input" type="radio" value={`${option.value}`} required />
                 {`${option.label}`}
               </label>
             </div>
@@ -21,10 +21,10 @@ const Menu = ({ options, guest, hasDiet }) =>
       <div className="form-group">
         <label className="control-label" htmlFor={`${guest}.hasDiet`}>Do you have any dietary requirements?</label>
         <div className="radio">
-          <label htmlFor="canCome"><Field name={`${guest}.hasDiet`} component="input" type="radio" value="yes" /> Yes</label>
+          <label htmlFor="canCome"><Field name={`${guest}.hasDiet`} component="input" type="radio" value="yes" required /> Yes</label>
         </div>
         <div className="radio">
-          <label htmlFor="canCome"><Field name={`${guest}.hasDiet`} component="input" type="radio" value="no" /> No</label>
+          <label htmlFor="canCome"><Field name={`${guest}.hasDiet`} component="input" type="radio" value="no" required /> No</label>
         </div>
       </div>
 
