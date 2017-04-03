@@ -126,7 +126,7 @@ class Invitation extends React.Component {
     }
     return (<div>
       <Provider store={store}>
-        <div>
+        <div className="logged-in">
           <div className="nav">
             <img className="logo img-responsive pull-left" src="/images/db/logo.png" alt="logo" />
             <button className="btn btn-secondary btn-lg btn-custom pull-right" onClick={this.toggleMoreInfo}>{moreInfoButtonText}</button>
