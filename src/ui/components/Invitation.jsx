@@ -7,12 +7,6 @@ const { isAuthenticated } = require('../is-authenticated');
 const RSVP = require('./RSVP.jsx');
 const Login = require('./Login.jsx');
 
-const menuOptions = [
-  { value: 'meat', label: 'Haggis' },
-  { value: 'vegetarian', label: 'Veggie haggis' },
-  { value: 'child', label: 'Child option' }
-];
-
 class Invitation extends React.Component {
   constructor(props) {
     super(props);
@@ -115,7 +109,7 @@ class Invitation extends React.Component {
     } else if (justSubmitted) {
       rsvp = <p>Thank you for your response. If you have any questions <a href={`mailto:${wedding.email}`}>please contact us</a>.</p>;
     } else {
-      rsvp = <RSVP onSubmit={this.submitAndUpdate} menuOptions={menuOptions} />;
+      rsvp = <RSVP onSubmit={this.submitAndUpdate} menuOptions={wedding.menu} />;
     }
     if (!authenticated) {
       return (

@@ -123,12 +123,54 @@ renderGuests.propTypes = {
     guest: React.PropTypes.string,
     index: React.PropTypes.number
   }),
-  menuOptions: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        value: React.PropTypes.string.isRequired,
-        label: React.PropTypes.string.isRequired
-      })
-    ).isRequired,
+  menuOptions: React.PropTypes.shape({
+    adult: React.PropTypes.shape({
+      starter: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired,
+      main: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired,
+      desert: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired
+    }).isRequired,
+    child: React.PropTypes.shape({
+      starter: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired,
+      main: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired,
+      desert: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired
+    }).isRequired
+  }).isRequired,
   canCome: React.PropTypes.arrayOf(React.PropTypes.bool),
   hasDiet: React.PropTypes.arrayOf(React.PropTypes.bool),
   meta: React.PropTypes.shape({
@@ -146,12 +188,54 @@ RSVP.propTypes = {
     isAuthenticated: React.PropTypes.bool
   }),
   loginUser: React.PropTypes.func,
-  menuOptions: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      value: React.PropTypes.string.isRequired,
-      label: React.PropTypes.string.isRequired
-    })
-  ).isRequired,
+  menuOptions: React.PropTypes.shape({
+    adult: React.PropTypes.shape({
+      starter: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired,
+      main: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired,
+      desert: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired
+    }).isRequired,
+    child: React.PropTypes.shape({
+      starter: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired,
+      main: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired,
+      desert: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired
+    }).isRequired
+  }).isRequired,
   canCome: React.PropTypes.arrayOf(React.PropTypes.bool),
   hasDiet: React.PropTypes.arrayOf(React.PropTypes.bool),
   error: React.PropTypes.string

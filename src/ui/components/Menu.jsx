@@ -1,21 +1,24 @@
 const React = require('react');
 const { Field } = require('redux-form');
 
+const renderOptions = (options, fieldname) => options.map((option, idx) =>
+  (<div className="radio" key={`${fieldname}-${idx}`}>
+    <label htmlFor={option.value}>
+      <Field name={fieldname} component="input" type="radio" value={option.value} required />
+      <span className="menu-heading">{option.label}</span>
+      { !!option.description && <p className="menu-description">{option.description}</p> }
+    </label>
+  </div>)
+);
+
 const Menu = ({ options, guest, hasDiet }) =>
   (
     <div>
       <div className="form-group">
         <label className="control-label" htmlFor="foodChoice">What would you like to eat?</label>
-        {
-          options.map(option =>
-            <div className="radio">
-              <label htmlFor={`${option.value}`}>
-                <Field name={`${guest}.foodChoice`} component="input" type="radio" value={`${option.value}`} required />
-                {`${option.label}`}
-              </label>
-            </div>
-            )
-        }
+        { renderOptions(options.adult.starter, `${guest}.starter`) }
+        { renderOptions(options.adult.main, `${guest}.main`) }
+        { renderOptions(options.adult.desert, `${guest}.desert`) }
       </div>
 
       <div className="form-group">
@@ -41,12 +44,54 @@ const Menu = ({ options, guest, hasDiet }) =>
   );
 
 Menu.propTypes = {
-  options: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      value: React.PropTypes.string.isRequired,
-      label: React.PropTypes.string.isRequired
-    })
-  ).isRequired,
+  options: React.PropTypes.shape({
+    adult: React.PropTypes.shape({
+      starter: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired,
+      main: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired,
+      desert: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired
+    }).isRequired,
+    child: React.PropTypes.shape({
+      starter: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired,
+      main: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired,
+      desert: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          value: React.PropTypes.string.isRequired,
+          label: React.PropTypes.string.isRequired,
+          description: React.PropTypes.string
+        })
+      ).isRequired
+    }).isRequired
+  }).isRequired,
   guest: React.PropTypes.string.isRequired,
   hasDiet: React.PropTypes.bool.isRequired
 };
