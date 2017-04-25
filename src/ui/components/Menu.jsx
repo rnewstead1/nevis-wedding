@@ -34,7 +34,7 @@ const Menu = ({ options, guest, hasDiet, childMenu }) =>
             <div>
               {renderOptions(options.adult.starter, `${guest}`, 'starter')}
               {renderOptions(options.adult.main, `${guest}`, 'main')}
-              {renderOptions(options.adult.desert, `${guest}`, 'desert')}
+              {renderOptions(options.adult.dessert, `${guest}`, 'dessert')}
             </div>
         }
         {
@@ -42,7 +42,7 @@ const Menu = ({ options, guest, hasDiet, childMenu }) =>
           <div>
             {renderOptions(options.child.starter, `${guest}`, 'starter')}
             {renderOptions(options.child.main, `${guest}`, 'main')}
-            {renderOptions(options.child.desert, `${guest}`, 'desert')}
+            {renderOptions(options.child.dessert, `${guest}`, 'dessert')}
           </div>
         }
       </div>
@@ -86,7 +86,7 @@ Menu.propTypes = {
           description: React.PropTypes.string
         })
       ).isRequired,
-      desert: React.PropTypes.arrayOf(
+      dessert: React.PropTypes.arrayOf(
         React.PropTypes.shape({
           value: React.PropTypes.string.isRequired,
           label: React.PropTypes.string.isRequired,
@@ -109,7 +109,7 @@ Menu.propTypes = {
           description: React.PropTypes.string
         })
       ).isRequired,
-      desert: React.PropTypes.arrayOf(
+      dessert: React.PropTypes.arrayOf(
         React.PropTypes.shape({
           value: React.PropTypes.string.isRequired,
           label: React.PropTypes.string.isRequired,

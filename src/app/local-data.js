@@ -44,7 +44,7 @@ module.exports = (db) => {
                   description: 'in a tomato and basil sauce'
                 }
               ],
-              desert: [
+              dessert: [
                 { value: 'adult-one', label: 'Sticky toffee pudding', description: 'with ice cream' },
                 { value: 'adult-cake', label: 'Chocolate Cake', description: 'with cream' },
               ]
@@ -57,7 +57,7 @@ module.exports = (db) => {
                 { value: 'child-chicken', label: 'Chicken Nuggets' },
                 { value: 'child-fish', label: 'Fish Fingers' }
               ],
-              desert: [
+              dessert: [
                 { value: 'child-ice', label: 'Ice Cream' }
               ]
             }

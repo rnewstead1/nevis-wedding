@@ -27,8 +27,8 @@ module.exports = () => {
     if (next.canCome === 'yes') {
       const starter = getDetails('starter', next.starter, next.childMenu);
       const main = getDetails('main', next.main, next.childMenu);
-      const desert = getDetails('desert', next.desert, next.childMenu);
-      nextGuest = `<p>${next.name}</p><p>Starter: ${starter}</p><p>Main: ${main}</p><p>Desert: ${desert}</p>`;
+      const dessert = getDetails('dessert', next.dessert, next.childMenu);
+      nextGuest = `<p>${next.name}</p><p>Starter: ${starter}</p><p>Main: ${main}</p><p>Desert: ${dessert}</p>`;
       if (next.hasDiet === 'yes') {
         nextGuest = `${nextGuest}<p>Dietary requirements: ${next.dietaryReqs}</p>`;
       }

@@ -141,7 +141,7 @@ renderGuests.propTypes = {
           description: React.PropTypes.string
         })
       ).isRequired,
-      desert: React.PropTypes.arrayOf(
+      dessert: React.PropTypes.arrayOf(
         React.PropTypes.shape({
           value: React.PropTypes.string.isRequired,
           label: React.PropTypes.string.isRequired,
@@ -164,7 +164,7 @@ renderGuests.propTypes = {
           description: React.PropTypes.string
         })
       ).isRequired,
-      desert: React.PropTypes.arrayOf(
+      dessert: React.PropTypes.arrayOf(
         React.PropTypes.shape({
           value: React.PropTypes.string.isRequired,
           label: React.PropTypes.string.isRequired,
@@ -207,7 +207,7 @@ RSVP.propTypes = {
           description: React.PropTypes.string
         })
       ).isRequired,
-      desert: React.PropTypes.arrayOf(
+      dessert: React.PropTypes.arrayOf(
         React.PropTypes.shape({
           value: React.PropTypes.string.isRequired,
           label: React.PropTypes.string.isRequired,
@@ -230,7 +230,7 @@ RSVP.propTypes = {
           description: React.PropTypes.string
         })
       ).isRequired,
-      desert: React.PropTypes.arrayOf(
+      dessert: React.PropTypes.arrayOf(
         React.PropTypes.shape({
           value: React.PropTypes.string.isRequired,
           label: React.PropTypes.string.isRequired,

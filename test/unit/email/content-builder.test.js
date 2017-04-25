@@ -21,7 +21,7 @@ describe('content-builder', () => {
             description: 'with yorkshire pudding'
           }
         ],
-        desert: [
+        dessert: [
           { value: 'adult-one', label: 'Sticky toffee pudding', description: 'with ice cream' },
         ]
       },
@@ -38,9 +38,9 @@ describe('content-builder', () => {
             label: 'Spaghetti Hoops'
           }
         ],
-        desert: [
+        dessert: [
           {
-            value: 'child-desert',
+            value: 'child-dessert',
             label: 'Ice cream'
           }
         ]
@@ -57,14 +57,14 @@ describe('content-builder', () => {
         canCome: 'yes',
         starter: 'adult-meat',
         main: 'adult-meat',
-        desert: 'adult-one'
+        dessert: 'adult-one'
       }, {
         name: 'G',
         canCome: 'yes',
         starter: 'adult-meat',
         main: 'adult-meat',
-        desert: 'adult-one'
-      }, { name: 'Quintana', canCome: 'yes', starter: 'adult-meat', main: 'adult-meat', desert: 'adult-one' }]);
+        dessert: 'adult-one'
+      }, { name: 'Quintana', canCome: 'yes', starter: 'adult-meat', main: 'adult-meat', dessert: 'adult-one' }]);
       expect(html).not.to.contain('undefined');
       expect(html).to.contain('Froome, G and Quintana');
     });
@@ -76,9 +76,9 @@ describe('content-builder', () => {
           canCome: 'yes',
           starter: 'adult-meat',
           main: 'adult-meat',
-          desert: 'adult-one'
+          dessert: 'adult-one'
         },
-        { name: 'G', canCome: 'yes', starter: 'adult-meat', main: 'adult-meat', desert: 'adult-one' }
+        { name: 'G', canCome: 'yes', starter: 'adult-meat', main: 'adult-meat', dessert: 'adult-one' }
       ]);
       expect(html).not.to.contain('undefined');
       expect(html).to.contain('We are delighted');
@@ -90,7 +90,7 @@ describe('content-builder', () => {
         canCome: 'yes',
         starter: 'adult-meat',
         main: 'adult-meat',
-        desert: 'adult-one'
+        dessert: 'adult-one'
       },
         { name: 'G', canCome: 'no' }]);
       expect(html).not.to.contain('undefined');
@@ -108,7 +108,7 @@ describe('content-builder', () => {
         canCome: 'yes',
         starter: 'adult-meat',
         main: 'adult-meat',
-        desert: 'adult-one'
+        dessert: 'adult-one'
       }]);
       expect(html).not.to.contain('undefined');
       expect(html).to.contain('Starter: Pork Pie with a rocket salad');
@@ -122,7 +122,7 @@ describe('content-builder', () => {
         canCome: 'yes',
         starter: 'adult-meat',
         main: 'adult-meat',
-        desert: 'adult-one'
+        dessert: 'adult-one'
       }]);
       expect(text).not.to.contain('undefined');
       expect(text).to.equal('Dear Froome\n\n\n\nThank you for RSVPing to our wedding.\n\nWe are delighted you can attend.\n\nWe have received your food choices as detailed below:\n\n\n--------------------------------------------------------------------------------\n\nFroome\n\nStarter: Pork Pie with a rocket salad\n\nMain: Roast Beef with yorkshire pudding\n\nDesert: Sticky toffee pudding with ice cream\n\nPlease contact us if you need to amend your choices.\n\nFrom,\n\nJason and Laura');
@@ -135,7 +135,7 @@ describe('content-builder', () => {
         childMenu: true,
         starter: 'child-starter',
         main: 'child-main',
-        desert: 'child-desert',
+        dessert: 'child-dessert',
       }]);
       expect(html).not.to.contain('undefined');
       expect(html).to.contain('Starter: Soup');
@@ -162,9 +162,9 @@ describe('content-builder', () => {
                 description: 'with parmesan cheese'
               }
             ],
-            desert: [
+            dessert: [
               {
-                value: 'Apple desert',
+                value: 'Apple dessert',
                 label: 'Apple crumble',
                 description: 'with custard'
               }
