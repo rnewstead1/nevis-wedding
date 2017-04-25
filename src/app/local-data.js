@@ -16,6 +16,7 @@ module.exports = (db) => {
       if (count === 0) {
         wedding.insertOne({
           brideAndGroom: 'Jason and Laura',
+          url: 'www.wearegettingmarried.com',
           date: 'Saturday 10th December 2016',
           time: '6pm until late',
           location: 'The Sir Chris Hoy Velodrome, Glasgow, Scotland',

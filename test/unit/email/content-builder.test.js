@@ -5,6 +5,7 @@ describe('content-builder', () => {
   const contentBuilder = contentBuilderCtr();
   const weddingDetails = {
     brideAndGroom: 'Jason and Laura',
+    url: 'http://www.wearegettingmarriedupamountain.com',
     menu: {
       adult: {
         starter: [
@@ -95,10 +96,12 @@ describe('content-builder', () => {
         { name: 'G', canCome: 'no' }]);
       expect(html).not.to.contain('undefined');
       expect(html).not.to.contain('We are delighted');
+      expect(html).to.contain('We are sorry that G cannot attend');
     });
 
     it('should include "We are sorry..." in html if all guests cannot come', () => {
-      const html = guestContent.html(weddingDetails, [{ canCome: 'no' }, { canCome: 'no' }]);
+      const html = guestContent.html(weddingDetails, [{ name: 'Froome', canCome: 'no' }, { name: 'G', canCome: 'no' }]);
+      expect(html).not.to.contain('undefined');
       expect(html).to.contain('We are sorry');
     });
 
@@ -111,9 +114,9 @@ describe('content-builder', () => {
         dessert: 'adult-one'
       }]);
       expect(html).not.to.contain('undefined');
-      expect(html).to.contain('Starter: Pork Pie with a rocket salad');
-      expect(html).to.contain('Main: Roast Beef with yorkshire pudding');
-      expect(html).to.contain('Desert: Sticky toffee pudding with ice cream');
+      expect(html).to.contain('Pork Pie with a rocket salad');
+      expect(html).to.contain('Roast Beef with yorkshire pudding');
+      expect(html).to.contain('Sticky toffee pudding with ice cream');
     });
 
     it('should stringify the html content for the text response', () => {
@@ -125,7 +128,11 @@ describe('content-builder', () => {
         dessert: 'adult-one'
       }]);
       expect(text).not.to.contain('undefined');
-      expect(text).to.equal('Dear Froome\n\n\n\nThank you for RSVPing to our wedding.\n\nWe are delighted you can attend.\n\nWe have received your food choices as detailed below:\n\n\n--------------------------------------------------------------------------------\n\nFroome\n\nStarter: Pork Pie with a rocket salad\n\nMain: Roast Beef with yorkshire pudding\n\nDesert: Sticky toffee pudding with ice cream\n\nPlease contact us if you need to amend your choices.\n\nFrom,\n\nJason and Laura');
+      expect(text).to.contain('DEAR FROOME');
+      expect(text).to.contain('We are delighted');
+      expect(text).to.contain('Pork Pie with a rocket salad');
+      expect(text).to.contain('Roast Beef with yorkshire pudding');
+      expect(text).to.contain('Sticky toffee pudding with ice cream');
     });
 
     it('should handle a menu selection that has no description', () => {
@@ -138,14 +145,15 @@ describe('content-builder', () => {
         dessert: 'child-dessert',
       }]);
       expect(html).not.to.contain('undefined');
-      expect(html).to.contain('Starter: Soup');
-      expect(html).to.contain('Main: Spaghetti Hoops');
-      expect(html).to.contain('Desert: Ice cream');
+      expect(html).to.contain('Soup');
+      expect(html).to.contain('Spaghetti Hoops');
+      expect(html).to.contain('Ice cream');
     });
 
     it('should get single item from db if a course is missing', () => {
       const weddingWithSingleMenuItems = {
         brideAndGroom: 'Jason and Laura',
+        url: 'http://www.wearegettingmarriedupamountain.com',
         menu: {
           adult: {
             starter: [
@@ -177,9 +185,9 @@ describe('content-builder', () => {
         canCome: 'yes'
       }]);
       expect(html).not.to.contain('undefined');
-      expect(html).to.contain('Starter: Soup with crusty bread');
-      expect(html).to.contain('Main: Spaghetti Bolognese with parmesan cheese');
-      expect(html).to.contain('Desert: Apple crumble with custard');
+      expect(html).to.contain('Soup with crusty bread');
+      expect(html).to.contain('Spaghetti Bolognese with parmesan cheese');
+      expect(html).to.contain('Apple crumble with custard');
     });
   });
 });

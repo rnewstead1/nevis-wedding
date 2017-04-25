@@ -1,20 +1,11 @@
 const html2text = require('html-to-text');
+const { styles } = require('./styles');
 
 module.exports = () => {
   const names = (guests) => {
     const nameList = guests.map(guest => guest.name);
     return [nameList.slice(0, -1).join(', '), nameList.slice(-1)[0]].join(nameList.length < 2 ? '' : ' and ');
   };
-
-  const htmlGuestSummary = guests => guests.reduce((first, next) => {
-    let nextGuest;
-    if (next.canCome === 'yes') {
-      nextGuest = `<p>${next.name} can come.</p>`;
-    } else {
-      nextGuest = `<p>${next.name} cannot come.</p>`;
-    }
-    return `${first}<hr>${nextGuest}`;
-  }, []);
 
   const foodChoices = (menu, guests) => guests.reduce((first, next) => {
     const getDetails = (course, value, isChild) => {
@@ -28,40 +19,74 @@ module.exports = () => {
       const starter = getDetails('starter', next.starter, next.childMenu);
       const main = getDetails('main', next.main, next.childMenu);
       const dessert = getDetails('dessert', next.dessert, next.childMenu);
-      nextGuest = `<p>${next.name}</p><p>Starter: ${starter}</p><p>Main: ${main}</p><p>Desert: ${dessert}</p>`;
+      nextGuest = `<h3>${next.name}</h3>
+                    <h4>Starter:</h4>
+                    <p>${starter}</p>
+                    <h4>Main:</h4>
+                    <p>${main}</p>
+                    <h4>Dessert:</h4>
+                    <p>${dessert}</p>`;
       if (next.hasDiet === 'yes') {
-        nextGuest = `${nextGuest}<p>Dietary requirements: ${next.dietaryReqs}</p>`;
+        nextGuest = `${nextGuest}<h4>Dietary requirements</h4><p>${next.dietaryReqs}</p>`;
       }
     }
-    return `${first}<hr>${nextGuest}`;
+    return `${first}<br>${nextGuest}`;
   }, []);
 
-  const allGuestsCanCome = guests => guests.filter(guest => guest.canCome === 'no').length === 0;
   const allGuestsCannotCome = guests => guests.filter(guest => guest.canCome === 'yes').length === 0;
+  const guestsThatCannotCome = guests => guests.filter(guest => guest.canCome === 'no');
+  const allGuestsCanCome = guests => guestsThatCannotCome(guests).length === 0;
 
-  const guestResponse = (weddingDetails, guests) => {
-    let response = `<html><body><p>Dear ${names(guests)}</p></p><p>Thank you for RSVPing to our wedding.</p>`;
+  const htmlResponse = (weddingDetails, guests) => {
+    let response = `<html>
+          <head>${styles}</head>
+          <body>
+            <div class="headContent">
+              <img class="head-img" src="${weddingDetails.url}/images/db/logo.png"/>
+              <h1>Thank you for your RSVP</h1>
+          </div>
+            <div class="bodyContent">
+                <h2>Dear ${names(guests)}</h2>
+                <p>Thank you for your RSVP.`;
+
     if (allGuestsCannotCome(guests)) {
-      response = `${response}<p>We are sorry you are unable to attend</p>`;
+      response = `${response} We are sorry you are unable to attend our wedding.</p>`;
     } else {
       if (allGuestsCanCome(guests)) {
-        response = `${response}<p>We are delighted you can attend.</p>`;
+        response = `${response} We are delighted you can attend our wedding.</p>`;
       }
-      response = `${response}<p>We have received your food choices as detailed below:</p>${foodChoices(weddingDetails.menu, guests)}<p>Please contact us if you need to amend your choices.</p>`;
+      response = `${response}
+                <br>
+                <h2>Your food choices</h2>
+                ${foodChoices(weddingDetails.menu, guests)}
+                <br>
+                <p>If you would like to change any of your food choices please let us know.</p>`;
+      const cannotCome = guestsThatCannotCome(guests);
+      if (cannotCome.length > 0) {
+        response = `${response} <p>We are sorry that ${names(cannotCome)} cannot attend.</p>`;
+      }
+      response = `${response} <p>We look forward to seeing you in October.  Please check the <a href="${weddingDetails.url}" target="_blank">website</a> for any final details.</p>`;
     }
-    return `${response}<p>From,</p><p>${weddingDetails.brideAndGroom}</p></body></html>`;
+    return `${response}
+            <br>
+            <p>From,</p>
+            <h2>${weddingDetails.brideAndGroom}</h2>
+            <a href="${weddingDetails.url}" target="_blank">${weddingDetails.url}</a>
+          </div>
+        </body>
+      </html>`;
   };
 
   return {
     ownerContent: {
       subject: guests => `Wedding RSVP from ${names(guests)}`,
-      text: (weddingDetails, guests) => html2text.fromString(`<html><body>${htmlGuestSummary(guests)}${foodChoices(weddingDetails.menu, guests)}</body></html>`),
-      html: (weddingDetails, guests) => `<html><body>${htmlGuestSummary(guests)}${foodChoices(weddingDetails.menu, guests)}</body></html>`
+      text: (weddingDetails, guests) => html2text.fromString(htmlResponse(weddingDetails, guests)),
+      html: htmlResponse
     },
     guestContent: {
-      subject: weddingDetails => `Thanks for your RSVP to ${weddingDetails.brideAndGroom}'s wedding`,
-      text: (weddingDetails, guests) => html2text.fromString(guestResponse(weddingDetails, guests)),
-      html: guestResponse
+      subject: () => 'Thanks for your RSVP',
+      text: (weddingDetails, guests) => html2text.fromString(htmlResponse(weddingDetails, guests)),
+      html: htmlResponse
     }
   };
 };
