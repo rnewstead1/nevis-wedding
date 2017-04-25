@@ -1,10 +1,10 @@
 const React = require('react');
 const { Field } = require('redux-form');
 
-const renderOptions = (options, guest, course) => {
+const renderOptions = (options, guest, course, title) => {
   const fieldname = `${guest}.${course}`;
   return (<div className="form-group">
-    <label className="control-label menu-label" htmlFor={course}>{course.charAt(0).toUpperCase() + course.slice(1)}</label>
+    <label className="control-label menu-label" htmlFor={course}>{title || course.charAt(0).toUpperCase() + course.slice(1)}</label>
     {options.length === 1
       ? <div>
         <span className="menu-heading">{options[0].label}</span>
@@ -33,7 +33,7 @@ const Menu = ({ options, guest, hasDiet, childMenu }) =>
           !childMenu &&
             <div>
               {renderOptions(options.adult.starter, `${guest}`, 'starter')}
-              {renderOptions(options.adult.main, `${guest}`, 'main')}
+              {renderOptions(options.adult.main, `${guest}`, 'main', 'Main course')}
               {renderOptions(options.adult.dessert, `${guest}`, 'dessert')}
             </div>
         }
@@ -41,7 +41,7 @@ const Menu = ({ options, guest, hasDiet, childMenu }) =>
           childMenu &&
           <div>
             {renderOptions(options.child.starter, `${guest}`, 'starter')}
-            {renderOptions(options.child.main, `${guest}`, 'main')}
+            {renderOptions(options.child.main, `${guest}`, 'main', 'Main course')}
             {renderOptions(options.child.dessert, `${guest}`, 'dessert')}
           </div>
         }
