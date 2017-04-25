@@ -25,6 +25,7 @@
     "dotenv": "^2.0.0",
     "es6-promise": "^4.0.5",
     "express": "~4.14.0",
+    "express-winston": "^2.3.0",
     "hbs": "~4.0.1",
     "html-to-text": "^3.2.0",
     "isomorphic-fetch": "^2.2.1",
@@ -45,7 +46,8 @@
     "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0",
     "serve-favicon": "~2.3.0",
-    "webpack": "^1.13.3"
+    "webpack": "^1.13.3",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",

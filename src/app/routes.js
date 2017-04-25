@@ -1,10 +1,22 @@
 const express = require('express');
+const expressWinston = require('express-winston');
+const winston = require('winston');
 
 const appRouter = express.Router();
 const apiRouter = express.Router();
 
 module.exports = (app, controllers) => {
   const { rsvp, session, invitation } = controllers;
+
+  app.use(expressWinston.logger({
+    transports: [
+      new winston.transports.Console({
+        json: true,
+        colorize: true
+      })
+    ]
+  }));
+
   appRouter.get('/', (req, res) => res.render('invitation', { title: 'Nevis wedding' }));
   app.use('/', appRouter);
 
@@ -24,4 +36,13 @@ module.exports = (app, controllers) => {
     res.status(err.status || 500);
     res.render('error', { message: 'Oops, something went wrong!', title: 'Error' });
   });
+
+  app.use(expressWinston.errorLogger({
+    transports: [
+      new winston.transports.Console({
+        json: true,
+        colorize: true
+      })
+    ]
+  }));
 };

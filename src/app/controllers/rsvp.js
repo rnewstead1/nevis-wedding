@@ -62,8 +62,8 @@ module.exports = (db, emailSender) => {
         .then(() => emailSender.sendMail(req.body.email, req.body.guests))
         .then(() => res.sendStatus(201))
         .catch((err) => {
-          console.log('We need to fix this to let the user know something has gone wrong...', err);
-          return res.sendStatus(500);
+          console.log('Error: ', err);
+          res.sendStatus(500);
         });
     });
   };
