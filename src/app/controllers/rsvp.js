@@ -59,12 +59,13 @@ module.exports = (db, emailSender) => {
       }
 
       return collection.insertOne({ phrase: userDetails.phrase, rsvp: req.body })
-        .then(() => emailSender.sendMail(req.body.email, req.body.guests))
         .then(() => res.sendStatus(201))
         .catch((err) => {
-          console.log('Error: ', err);
-          res.sendStatus(500);
-        });
+          res.status(500).json({ _error: 'Unknown error submitting response. Please try again later.' });
+          throw err;
+        })
+        .then(() => emailSender.sendMail(req.body.email, req.body.guests))
+        .catch(err => console.log('Error:', err));
     });
   };
 

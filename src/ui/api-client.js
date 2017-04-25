@@ -35,12 +35,10 @@ const saveForm = values =>
       credentials: 'same-origin',
       body: JSON.stringify(values)
     }).then((response) => {
-      if (response.status === 400) {
+      if (!response.ok) {
         return response.json().then((json) => {
           throw new SubmissionError(json);
         });
-      } else if (!response.ok) {
-        return reject(response.status);
       }
       console.log(`Submitted:\n\n${JSON.stringify(values)}`);
       resolve();
