@@ -17,14 +17,18 @@ module.exports = () => {
   }, []);
 
   const foodChoices = (menu, guests) => guests.reduce((first, next) => {
-    const details = (course, value) => menu.adult[course].find(option => option.value === value);
+    const getDetails = (course, value, isChild) => {
+      const options = menu[isChild ? 'child' : 'adult'][course];
+      const details = value ? options.find(option => option.value === value) : options[0];
+      return details.description ? `${details.label} ${details.description}` : details.label;
+    };
 
-    let nextGuest;
+    let nextGuest = '';
     if (next.canCome === 'yes') {
-      const starter = details('starter', next.starter);
-      const main = details('main', next.main);
-      const desert = details('desert', next.desert);
-      nextGuest = `<p>${next.name}</p><p>Starter: ${starter.label} ${starter.description}</p><p>Main: ${main.label} ${main.description}</p><p>Desert: ${desert.label} ${desert.description}</p>`;
+      const starter = getDetails('starter', next.starter, next.childMenu);
+      const main = getDetails('main', next.main, next.childMenu);
+      const desert = getDetails('desert', next.desert, next.childMenu);
+      nextGuest = `<p>${next.name}</p><p>Starter: ${starter}</p><p>Main: ${main}</p><p>Desert: ${desert}</p>`;
       if (next.hasDiet === 'yes') {
         nextGuest = `${nextGuest}<p>Dietary requirements: ${next.dietaryReqs}</p>`;
       }
@@ -50,12 +54,12 @@ module.exports = () => {
 
   return {
     ownerContent: {
-      subject: guests => `Nevis Wedding RSVP: ${names(guests)}`,
+      subject: guests => `Wedding RSVP from ${names(guests)}`,
       text: (weddingDetails, guests) => html2text.fromString(`<html><body>${htmlGuestSummary(guests)}${foodChoices(weddingDetails.menu, guests)}</body></html>`),
       html: (weddingDetails, guests) => `<html><body>${htmlGuestSummary(guests)}${foodChoices(weddingDetails.menu, guests)}</body></html>`
     },
     guestContent: {
-      subject: weddingDetails => `${weddingDetails.brideAndGroom}'s wedding RSVP`,
+      subject: weddingDetails => `Thanks for your RSVP to ${weddingDetails.brideAndGroom}'s wedding`,
       text: (weddingDetails, guests) => html2text.fromString(guestResponse(weddingDetails, guests)),
       html: guestResponse
     }

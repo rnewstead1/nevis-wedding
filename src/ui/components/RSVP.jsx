@@ -12,11 +12,13 @@ const mapStateToProps = (state) => {
   const guests = selector(state, 'guests');
   const canCome = guests ? guests.map(guest => guest.canCome === 'yes') : [];
   const hasDiet = guests ? guests.map(guest => guest.hasDiet === 'yes') : [];
+  const childMenu = guests ? guests.map(guest => guest.childMenu) : [];
 
   return {
     auth: state.auth,
     canCome,
-    hasDiet
+    hasDiet,
+    childMenu
   };
 };
 
@@ -33,7 +35,7 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
   </div>
 );
 
-const renderGuests = ({ fields, menuOptions, canCome, hasDiet, meta: { touched, error } }) => (
+const renderGuests = ({ fields, menuOptions, canCome, hasDiet, childMenu, meta: { touched, error } }) => (
   <ul className="list-group">
     {touched && error && <span>{error}</span>}
 
@@ -56,7 +58,7 @@ const renderGuests = ({ fields, menuOptions, canCome, hasDiet, meta: { touched, 
             <label htmlFor={`${guest}.canCome`}><Field name={`${guest}.canCome`} component="input" type="radio" value="no" required /> No, I can&apos;t come</label>
           </div>
         </div>
-        {canCome[index] && <Menu options={menuOptions} guest={guest} hasDiet={hasDiet[index]} />}
+        {canCome[index] && <Menu options={menuOptions} guest={guest} hasDiet={hasDiet[index]} childMenu={childMenu[index]} />}
       </li>
     )}
 
@@ -69,13 +71,13 @@ const renderGuests = ({ fields, menuOptions, canCome, hasDiet, meta: { touched, 
 );
 
 let RSVP = (props) => {
-  const { handleSubmit, pristine, reset, submitting, auth, loginUser, menuOptions, canCome, hasDiet, error } = props;
+  const { handleSubmit, pristine, reset, submitting, auth, loginUser, menuOptions, canCome, hasDiet, childMenu, error } = props;
   return (
     <div>
       {error && <p className="bg-danger text-center">{error}</p>}
       <Login open={!auth.isAuthenticated} onLogin={loginUser} />
       <form onSubmit={handleSubmit}>
-        <FieldArray name="guests" component={renderGuests} menuOptions={menuOptions} canCome={canCome} hasDiet={hasDiet} />
+        <FieldArray name="guests" component={renderGuests} menuOptions={menuOptions} canCome={canCome} hasDiet={hasDiet} childMenu={childMenu} />
         <Field name="email" component={renderField} type="email" label="Contact email" />
         <div className="form-group btn-toolbar">
           <button className="btn btn-primary btn-custom" type="submit" disabled={pristine || submitting}>{submitting ? 'Submitting' : 'Submit'}</button>
@@ -173,6 +175,7 @@ renderGuests.propTypes = {
   }).isRequired,
   canCome: React.PropTypes.arrayOf(React.PropTypes.bool),
   hasDiet: React.PropTypes.arrayOf(React.PropTypes.bool),
+  childMenu: React.PropTypes.arrayOf(React.PropTypes.bool),
   meta: React.PropTypes.shape({
     touched: React.PropTypes.bool,
     error: React.PropTypes.string
@@ -238,6 +241,7 @@ RSVP.propTypes = {
   }).isRequired,
   canCome: React.PropTypes.arrayOf(React.PropTypes.bool),
   hasDiet: React.PropTypes.arrayOf(React.PropTypes.bool),
+  childMenu: React.PropTypes.arrayOf(React.PropTypes.bool),
   error: React.PropTypes.string
 };
 

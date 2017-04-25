@@ -61,7 +61,10 @@ module.exports = (db, emailSender) => {
       return collection.insertOne({ phrase: userDetails.phrase, rsvp: req.body })
         .then(() => emailSender.sendMail(req.body.email, req.body.guests))
         .then(() => res.sendStatus(201))
-        .catch(() => res.sendStatus(500));
+        .catch((err) => {
+          console.log('We need to fix this to let the user know something has gone wrong...', err);
+          return res.sendStatus(500);
+        });
     });
   };
 
