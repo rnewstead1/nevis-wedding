@@ -138,6 +138,10 @@ class Invitation extends React.Component {
                 <p>{wedding.rsvp}</p>
               </div> : false}
             {moreInfo ? ReactHtmlParser(wedding.moreInfo) : false}
+            {moreInfo ?
+              <div className="google-maps">
+                <iframe src={ReactHtmlParser(wedding.mapUrl)} width="600" height="450" frameBorder="0" style={{ border: '0' }} allowFullScreen />
+              </div> : false}
             {showRsvp ? rsvp : false}
           </div>
         </div>
