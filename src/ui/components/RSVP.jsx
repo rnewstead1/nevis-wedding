@@ -63,9 +63,10 @@ const renderGuests = ({ fields, menuOptions, canCome, hasDiet, childMenu, meta: 
     )}
 
     <li className="list-group-item">
-      <button type="button" className="btn btn-success" onClick={() => fields.push({})}>
+      <button type="button" className="btn btn-default" onClick={() => fields.push({})}>
         <span className="glyphicon glyphicon-plus" aria-hidden="true" />
-        Add guest</button>
+        {fields.length === 0 ? 'Add guest' : 'Add another guest'}
+      </button>
     </li>
   </ul>
 );
@@ -77,6 +78,7 @@ let RSVP = (props) => {
       {error && <p className="bg-danger text-center">{error}</p>}
       <Login open={!auth.isAuthenticated} onLogin={loginUser} />
       <form onSubmit={handleSubmit}>
+        <div className="text-left"><br /><p>Press the <strong>Add guest</strong> button and choose food for each guest</p></div>
         <FieldArray name="guests" component={renderGuests} menuOptions={menuOptions} canCome={canCome} hasDiet={hasDiet} childMenu={childMenu} />
         <Field name="email" component={renderField} type="email" label="Contact email" />
         <div className="form-group btn-toolbar">
