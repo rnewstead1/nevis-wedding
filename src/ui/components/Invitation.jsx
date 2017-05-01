@@ -135,6 +135,7 @@ class Invitation extends React.Component {
                 <p>{wedding.date}</p>
                 <p>{wedding.time}</p>
                 <address>{wedding.location}</address>
+                <p>{wedding.rsvp}</p>
               </div> : false}
             {moreInfo ? ReactHtmlParser(wedding.moreInfo) : false}
             {showRsvp ? rsvp : false}
