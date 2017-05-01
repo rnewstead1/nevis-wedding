@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "test": "NODE_ENV=test node_modules/.bin/mocha --reporter spec -t 10000 'test/**/*.js'",
-    "start": "npm run build-assets && node index.js",
+    "postinstall": "npm run build-assets",
+    "start": "node index.js",
     "lint": "node_modules/eslint/bin/eslint.js --ext .js,.jsx ./src ./test index.js",
     "build-assets": "node_modules/webpack/bin/webpack.js --optimize-dedupe --optimize-minimize",
-    "dev": "mkdir -p public/images/db ; cp public/images/development/*.jpg public/images/db/ ; node_modules/nodemon/bin/nodemon.js -e js,jsx,hbs,json --watch src/ --exec 'npm run start'",
+    "dev": "mkdir -p public/images/db ; cp public/images/development/*.jpg public/images/db/ ; node_modules/nodemon/bin/nodemon.js -e js,jsx,hbs,json --watch src/ --exec 'node_modules/webpack/bin/webpack.js && npm run start'",
     "precommit": "npm run lint",
     "prepush": "npm run test"
   },

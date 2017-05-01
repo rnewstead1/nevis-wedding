@@ -57,6 +57,7 @@ MongoClient.connect(process.env.MONGODB_URI)
   )
   .then((db) => {
     const wedding = weddingCtr(db);
+    console.log('Application started');
     return emailSenderCtr(config, wedding)
       .then((emailSender) => {
         const controllers = {
