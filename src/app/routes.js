@@ -8,13 +8,17 @@ const apiRouter = express.Router();
 module.exports = (app, controllers) => {
   const { rsvp, session, invitation } = controllers;
 
+  expressWinston.requestWhitelist.push('body');
   app.use(expressWinston.logger({
     transports: [
       new winston.transports.Console({
-        json: true,
+        json: false,
         colorize: true
+
       })
-    ]
+    ],
+    statusLevel: true,
+    ignoreRoute: req => req.method === 'GET'
   }));
 
   appRouter.get('/', (req, res) => res.render('invitation', { title: 'Nevis wedding' }));
