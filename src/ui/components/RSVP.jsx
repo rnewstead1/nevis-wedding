@@ -63,7 +63,7 @@ const renderGuests = ({ fields, menuOptions, canCome, hasDiet, childMenu, meta: 
     )}
 
     <li className="list-group-item">
-      <button type="button" className="btn btn-default" onClick={() => fields.push({})}>
+      <button type="button" className="btn btn-success" onClick={() => fields.push({})}>
         <span className="glyphicon glyphicon-plus" aria-hidden="true" />
         Add guest</button>
     </li>
