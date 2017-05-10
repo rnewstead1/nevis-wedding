@@ -142,6 +142,7 @@ class Invitation extends React.Component {
               <div className="google-maps">
                 <iframe src={ReactHtmlParser(wedding.mapUrl)} width="600" height="450" frameBorder="0" style={{ border: '0' }} allowFullScreen />
               </div> : false}
+            {moreInfo ? <p><b><a href={`mailto:${wedding.email}`}>Contact us</a></b></p> : false}
             {showRsvp ? rsvp : false}
           </div>
         </div>
