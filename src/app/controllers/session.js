@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 module.exports = (db) => {
   const create = (req, res) => {
     const collection = db.collection('phrases');
-    collection.findOne({ phrase: req.body.phrase })
+    collection.findOne({ phrase: req.body.phrase.trim().toLowerCase() })
       .then((found) => {
         if (!found) {
           res.status(401);
