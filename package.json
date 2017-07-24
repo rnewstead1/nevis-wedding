@@ -13,7 +13,7 @@
     "prepush": "npm run test"
   },
   "engines": {
-    "node": "7.1.0"
+    "node": "7.10.1"
   },
   "dependencies": {
     "babel-core": "^6.18.2",
